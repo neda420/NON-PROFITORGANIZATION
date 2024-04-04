@@ -1,0 +1,298 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('img/Thank-YOu-Pets.jpg'); /* Replace 'background.jpg' with your image file */
+    background-size: cover;
+    background-position: left;
+    background-repeat: no-repeat;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Navigation Bar */
+.navbar {
+    background-color: #333;
+    padding: 10px 0;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    height: 100px; /* Adjust the height as needed */
+}
+
+.nav-links {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Hero Section */
+.hero {
+    background-image: url('img/catdogs.jpeg'); /* Replace 'hero.jpg' with your hero image file */
+    background-size: cover;
+    background-position: center;
+    padding: 100px 0;
+    text-align: center;
+    color: #fff;
+}
+
+.hero h1 {
+    font-size: 45px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 20px;
+    margin-bottom: 40px;
+}
+
+.hero .btn {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.hero .btn:hover {
+    background-color: #0056b3;
+}
+
+/* About Us Section */
+.about {
+    background-color: #f9f9f93f;
+    padding: 80px 0;
+    text-align: center;
+}
+
+.about h2 {
+    font-size: 36px;
+    margin-bottom: 40px;
+}
+
+.about p {
+    font-size: 20px;
+}
+
+/* Our Mission Section */
+.mission {
+    padding: 100px 0;
+    text-align: center;
+    color: #fff;
+}
+
+.mission h2 {
+    font-size: 36px;
+    margin-bottom: 40px;
+}
+
+.mission p {
+    font-size: 20px;
+    margin-bottom: 40px;
+}
+/* Volunteer Now Section */
+.volunteer {
+    background-color: #f9f9f9; /* Light gray background color */
+    padding: 80px 0;
+    text-align: center;
+}
+
+.volunteer h2 {
+    font-size: 36px;
+    margin-bottom: 40px;
+}
+
+.volunteer p {
+    font-size: 20px;
+    background-color: #007bff; /* Blue background color */
+    color: #fff; /* White text color */
+    padding: 20px; /* Adjust padding as needed */
+    border-radius: 5px; /* Add rounded corners */
+    margin-bottom: 40px;
+}
+
+.volunteer .btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.volunteer .btn:hover {
+    background-color: #0056b3;
+}
+
+/* Volunteer Form */
+.volunteer-form {
+    background-color: #007bff; /* Blue background color */
+    padding: 20px; /* Adjust padding as needed */
+    border-radius: 5px; /* Add rounded corners */
+    text-align: left; /* Align form elements to the left */
+}
+
+.volunteer-form h3 {
+    font-size: 24px;
+    color: #fff; /* White text color */
+    margin-bottom: 20px;
+}
+
+.volunteer-form label {
+    display: block;
+    margin-bottom: 10px;
+    color: #fff; /* White text color */
+}
+
+.volunteer-form input,
+.volunteer-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: none;
+}
+
+.volunteer-form input[type="submit"] {
+    background-color: #fff;
+    color: #007bff;
+    cursor: pointer;
+}
+
+.volunteer-form input[type="submit"]:hover {
+    background-color: #e6e6e6;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Bar Chart Styles */
+.bar-chart {
+    text-align: center;
+    background-color: #f0f0f030; /* Light gray background */
+}
+
+.bar {
+    background-color: #4CAF50; /* Green color */
+    width: 100%;
+    border-radius: 5px;
+    transition: height 0.5s ease;
+}
+
+/* Adjust the height of the bar based on volunteers count */
+:root {
+    --volunteers-count: 0; /* Initial value */
+}
+
+/* Additional Chart Styles */
+.pie-chart,
+.additional-charts {
+    text-align: center;
+    background-color: #f0f0f04f; /* Light gray background */
+}
+
+.pie {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #ffffff31; /* White color */
+    margin: 0 auto;
+}
+
+.slice {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+.legend {
+    margin-top: 20px;
+}
+
+.item {
+    margin-bottom: 10px;
+}
+
+.item span {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+/* Colorful legend items */
+.item:nth-child(1) span {
+    background-color: #007bff; /* Blue color */
+}
+
+.item:nth-child(2) span {
+    background-color: #FF9800; /* Orange color */
+}
+
+
+/* Contact Us Section */
+.contact {
+    background-color: #333333b1;
+    padding: 100px 0;
+    text-align: center;
+}
+
+.contact h2 {
+    font-size: 36px;
+    color: #fff;
+    margin-bottom: 40px;
+}
+
+.contact p {
+    font-size: 20px;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+/* Footer */
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer p {
+    margin: 0;
+}
