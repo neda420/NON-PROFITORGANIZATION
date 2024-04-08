@@ -15,13 +15,35 @@
                     <li><a href="#">Home</a></li>
                     <li><a href="#">About</a></li>
                     <li><a href="#">Adopt</a></li>
-                    <li><a href="#donate-section">Donate</a></li> <!-- Updated link with smooth scroll -->
-                    <li><a href="#volunteer-section">Volunteer</a></li> <!-- Added ID to the Volunteer section -->
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="#donate-section">Donate</a></li>
+                    <li><a href="#volunteer-section">Volunteer</a></li>
+                    <!-- Contact link as a pop-up trigger -->
+                    <li><a href="#" id="contact-popup-trigger">Contact</a></li>
                 </ul>
             </nav>
         </div>
     </header>
+
+    <!-- Contact Pop-up Modal -->
+    <div id="contact-popup" class="popup">
+        <div class="popup-content">
+            <span class="close" id="close-popup">&times;</span>
+            <h2>Contact Us</h2>
+            <p>For inquiries, you can reach us through:</p>
+            <ul>
+                <li><strong>Email:</strong> animalShelter@gmail.com</li>
+                <li><strong>Phone:</strong> +880 1000 222222</li>
+            </ul>
+            <p>Alternatively, you can email us directly using the form below:</p>
+            <form id="contact-form">
+                <input type="text" id="name" placeholder="Your Name" required>
+                <input type="email" id="email" placeholder="Your Email" required>
+                <textarea id="message" placeholder="Your Message" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+
     <section class="hero">
         <div class="container">
             <h1>Welcome to Our Animal Rescue</h1>
@@ -37,14 +59,14 @@
             <p>We are dedicated to rescuing and providing shelter for animals in need. Our organization works tirelessly to ensure that every animal gets the love and care they deserve.</p>
         </div>
     </section>
-    <section id="volunteer-section" class="volunteer"> <!-- Added ID attribute to the volunteer section -->
+    <section id="volunteer-section" class="volunteer">
         <div class="container">
             <h2>Volunteer With Us</h2>
             <p>Join us in making a difference in the lives of animals. Whether you want to help with animal care, fundraising, or events, there's a place for you in our volunteer community.</p>
             <a href="#" class="btn">Become a Volunteer</a>
         </div>
     </section>
-    <section id="donate-section" class="donate"> <!-- Added ID attribute to the donate section -->
+    <section id="donate-section" class="donate">
         <div class="container">
             <h2>Donate to Support Our Cause</h2>
             <p>Your generous donation helps us provide shelter, food, and medical care to animals in need. Every contribution makes a difference in the lives of animals.</p>
