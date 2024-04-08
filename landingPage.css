@@ -114,7 +114,7 @@ nav {
     cursor: pointer;
     text-decoration: none; /* Remove underline */
     margin-top: 20px;
-    margin-left: calc(50% - 75px); /* Adjust horizontal position */
+    margin-left: calc(50% - 100px); /* Adjust horizontal position */
     display: inline-block;
 }
 
@@ -123,3 +123,10 @@ nav {
     background-color: #555;
 }
 
+/* Styles for footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}

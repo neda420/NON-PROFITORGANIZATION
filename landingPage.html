@@ -15,8 +15,8 @@
                     <li><a href="#">Home</a></li>
                     <li><a href="#">About</a></li>
                     <li><a href="#">Adopt</a></li>
-                    <li><a href="#">Donate</a></li>
-                    <li><a href="#">Volunteer</a></li>
+                    <li><a href="#donate-section">Donate</a></li> <!-- Updated link with smooth scroll -->
+                    <li><a href="#volunteer-section">Volunteer</a></li> <!-- Added ID to the Volunteer section -->
                     <li><a href="#">Contact</a></li>
                 </ul>
             </nav>
@@ -37,14 +37,14 @@
             <p>We are dedicated to rescuing and providing shelter for animals in need. Our organization works tirelessly to ensure that every animal gets the love and care they deserve.</p>
         </div>
     </section>
-    <section class="volunteer">
+    <section id="volunteer-section" class="volunteer"> <!-- Added ID attribute to the volunteer section -->
         <div class="container">
             <h2>Volunteer With Us</h2>
             <p>Join us in making a difference in the lives of animals. Whether you want to help with animal care, fundraising, or events, there's a place for you in our volunteer community.</p>
             <a href="#" class="btn">Become a Volunteer</a>
         </div>
     </section>
-    <section class="donate">
+    <section id="donate-section" class="donate"> <!-- Added ID attribute to the donate section -->
         <div class="container">
             <h2>Donate to Support Our Cause</h2>
             <p>Your generous donation helps us provide shelter, food, and medical care to animals in need. Every contribution makes a difference in the lives of animals.</p>
@@ -57,6 +57,11 @@
             <p>Placeholder for shelter information and location map.</p>
         </div>
     </section>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Animal Rescue Non-Profit. All Rights Reserved.</p>
+        </div>
+    </footer>
     <script src="landingPage.js"></script>
 </body>
 </html>
