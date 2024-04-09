@@ -92,10 +92,14 @@ nav {
 .about h2, .volunteer h2, .donate h2, .shelter-info h2 {
     text-align: center;
     margin-bottom: 20px;
+    font-family: Arial, sans-serif; /* Update font family */
 }
 
 .about p, .volunteer p, .donate p, .shelter-info p {
     text-align: center;
+    margin-bottom: 20px; /* Improved spacing between paragraphs */
+    font-family: Arial, sans-serif; /* Update font family */
+    line-height: 1.6; /* Improved line height for better readability */
 }
 
 /* Styles for "Become a Volunteer" and "Make a Donation" buttons */
