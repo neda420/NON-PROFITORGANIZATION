@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donation</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/donation.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h2 class="mb-0">Donation</h2>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label for="donorId">Donor ID</label>
+                        <input type="text" class="form-control" id="donorId" placeholder="Enter donor ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="donorName">Donor Name</label>
+                        <input type="text" class="form-control" id="donorName" placeholder="Enter donor name">
+                    </div>
+                    <div class="form-group">
+                        <label for="purpose">Donation Purpose</label>
+                        <select class="form-control" id="purpose" onchange="updateAmount()">
+                            <option value="Weekly">Weekly donor</option>
+                            <option value="Monthly">Monthly Donor</option>
+                            <option value="Shelter">Make a Shelter</option>
+                            <option value="Medical">For medical purposes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Amount</label>
+                        <input type="number" class="form-control" id="amount" placeholder="Select donation purpose to see amount" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" class="form-control" id="date">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Pay</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        function updateAmount() {
+    var purpose = document.getElementById('purpose').value;
+    var amountInput = document.getElementById('amount');
+
+    switch (purpose) {
+        case 'Weekly':
+            amountInput.value = '500.00';
+            break;
+        case 'Monthly':
+            amountInput.value = '2000.00';
+            break;
+        case 'Shelter':
+            amountInput.value = '10000.00';
+            break;
+        case 'Medical':
+            amountInput.value = '5000.00';
+            break;
+        default:
+            amountInput.value = '';
+    }
+}
+    </script>
+</body>
+</html>
