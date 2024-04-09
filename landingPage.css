@@ -50,33 +50,35 @@ nav {
 /* Styles for hero section */
 .hero {
     background-color: #ffcc00;
-    padding: 100px 0;
+    padding: 150px 0; /* Increase padding to take more vertical space */
     text-align: center;
 }
 
 .hero h1 {
-    font-size: 36px;
-    margin-bottom: 20px;
+    font-size: 48px; /* Increase font size for a more prominent heading */
+    margin-bottom: 40px; /* Increase margin for better spacing */
 }
 
 .search-container {
-    margin-top: 20px;
+    margin-top: 40px; /* Increase margin for better separation from heading */
 }
 
 .search-container input[type=text] {
-    padding: 10px;
-    width: 300px;
+    padding: 15px; /* Increase padding for input field */
+    width: 60%; /* Adjust width for responsiveness */
+    max-width: 500px; /* Limit maximum width for better readability */
     border: none;
-    border-radius: 20px;
+    border-radius: 30px; /* Increase border radius for a more modern look */
 }
 
 .search-container button {
-    padding: 10px 20px;
+    padding: 15px 30px; /* Increase padding for button */
     background-color: #333;
     color: #fff;
     border: none;
-    border-radius: 20px;
+    border-radius: 30px; /* Increase border radius for consistency */
     cursor: pointer;
+    margin-left: 10px; /* Adjust margin for better alignment with input field */
 }
 
 .search-container button:hover {
