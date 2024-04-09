@@ -7,6 +7,102 @@
     <title>Helping Paws - Empowering Volunteers</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="chart.css">
+    <style>
+        /* Responsive CSS */
+
+        /* Container */
+        .container {
+            width: 90%;
+            margin: auto;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-right: 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        .hero img {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+        }
+
+        /* Volunteer Now Section */
+        .volunteer {
+            text-align: center;
+            padding: 80px 0;
+        }
+
+        .volunteer-form {
+            margin-top: 40px;
+        }
+
+        .volunteer-form form {
+            max-width: 400px;
+            margin: auto;
+        }
+
+        /* About Us Section */
+        .about {
+            text-align: center;
+            padding: 80px 0;
+        }
+
+        /* Our Mission Section */
+        .mission {
+            text-align: center;
+            padding: 80px 0;
+        }
+
+        .chart-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .chart-container:last-child {
+            margin-bottom: 0;
+        }
+
+        .bar-chart,
+        .pie-chart {
+            flex: 1;
+            max-width: 400px;
+        }
+
+        /* Contact Us Section */
+        .contact {
+            text-align: center;
+            padding: 80px 0;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 20px 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -35,6 +131,7 @@
             <a href="#volunteer" class="btn">Volunteer Now</a>
         </div>
     </section>
+
     <!-- Volunteer Now Section -->
     <section id="volunteer" class="volunteer">
         <div class="container">
@@ -71,152 +168,68 @@
                 Our volunteers work tirelessly to ensure these animals receive the love and support they deserve.</p>
         </div>
     </section>
-    <!DOCTYPE html>
-    <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Helping Paws - Our Mission</title>
-        <link rel="stylesheet" href="styles.css">
-        <style>
-            /* Additional CSS styles for visualization */
-            .chart-container {
-                display: flex;
-                justify-content: space-between;
-                align-items: stretch;
-                border-bottom: 2px solid #ccc;
-                /* Divider between chart sections */
-                padding-bottom: 20px;
-                margin-bottom: 20px;
-            }
-
-            .chart-container:last-child {
-                border-bottom: none;
-                /* Remove divider for the last chart section */
-                padding-bottom: 0;
-                margin-bottom: 0;
-            }
-
-            .bar-chart,
-            .pie-chart {
-                flex: 1;
-                /* Make chart sections equally spaced */
-                margin-right: 20px;
-                /* Add space between chart sections */
-            }
-
-            .bar-chart h3,
-            .pie-chart h3 {
-                margin-top: 0;
-            }
-
-            .bar,
-            .pie {
-                margin-top: 20px;
-                /* Add space between chart title and chart */
-            }
-        </style>
-    </head>
-
-    <body>
-
-        <!-- Our Mission Section -->
-        <section id="mission" class="mission">
-            <div class="container">
-                <h2>Our Mission</h2>
-                <p>Our mission is to provide shelter, medical care, and love to stray cats, dogs, and other animals in
-                    need.
-                    We believe that every animal deserves a chance for a happy and healthy life.</p>
-                <!-- Bar Chart: Volunteers Count -->
-                <div class="chart-container">
-                    <div class="bar-chart">
-                        <h3>Volunteers Count</h3>
-                        <div class="bar" style="--bar-height: calc(10% * var(--volunteers-count, 0));"></div>
-                    </div>
-                    <!-- Pie Chart: Certified Volunteers -->
-                    <div class="pie-chart">
-                        <h3>Certified Volunteers</h3>
-                        <div class="pie">
-                            <div class="slice" style="--offset: 0; --value: var(--certified-volunteers, 40);"></div>
-                            <div class="slice"
-                                style="--offset: calc(var(--certified-volunteers, 40) * 1%); --value: calc(100 - var(--certified-volunteers, 40));">
-                            </div>
-                        </div>
-                        <div class="legend">
-                            <div class="item"><span></span>Certified Volunteers: <span
-                                    id="certified-volunteers">40</span>%</div>
-                            <div class="item"><span></span>Regular Volunteers: <span id="regular-volunteers">60</span>%
-                            </div>
-                        </div>
-                    </div>
+    <!-- Our Mission Section -->
+    <section id="mission" class="mission">
+        <div class="container">
+            <h2>Our Mission</h2>
+            <p>Our mission is to provide shelter, medical care, and love to stray cats, dogs, and other animals in need.
+                We believe that every animal deserves a chance for a happy and healthy life.</p>
+            <!-- Bar Chart: Volunteers Count -->
+            <div class="chart-container">
+                <div class="bar-chart">
+                    <h3>Volunteers Count</h3>
+                    <div class="bar" style="--bar-height: calc(10% * var(--volunteers-count, 0));"></div>
                 </div>
-                <!-- Additional Charts: Stray Cats and Dogs Helped -->
-                <div class="chart-container">
-                    <div class="pie-chart">
-                        <h3>Stray Cats Helped</h3>
-                        <div class="pie">
-                            <div class="slice" style="--offset: 0; --value: var(--stray-cats-rescued, 60);"></div>
-                            <div class="slice"
-                                style="--offset: calc(var(--stray-cats-rescued, 60) * 1%); --value: calc(100 - var(--stray-cats-rescued, 60));">
-                            </div>
-                        </div>
-                        <div class="legend">
-                            <div class="item"><span></span>Rescued: <span id="stray-cats-rescued">60</span>%</div>
-                            <div class="item"><span></span>Remaining: <span id="stray-cats-remaining">40</span>%</div>
+                <!-- Pie Chart: Certified Volunteers -->
+                <div class="pie-chart">
+                    <h3>Certified Volunteers</h3>
+                    <div class="pie">
+                        <div class="slice" style="--offset: 0; --value: var(--certified-volunteers, 40);"></div>
+                        <div class="slice"
+                            style="--offset: calc(var(--certified-volunteers, 40) * 1%); --value: calc(100 - var(--certified-volunteers, 40));">
                         </div>
                     </div>
-                    <div class="pie-chart">
-                        <h3>Stray Dogs Helped</h3>
-                        <div class="pie">
-                            <div class="slice" style="--offset: 0; --value: var(--stray-dogs-rescued, 75);"></div>
-                            <div class="slice"
-                                style="--offset: calc(var(--stray-dogs-rescued, 75) * 1%); --value: calc(100 - var(--stray-dogs-rescued, 75));">
-                            </div>
-                        </div>
-                        <div class="legend">
-                            <div class="item"><span></span>Rescued: <span id="stray-dogs-rescued">75</span>%</div>
-                            <div class="item"><span></span>Remaining: <span id="stray-dogs-remaining">25</span>%</div>
+                    <div class="legend">
+                        <div class="item"><span></span>Certified Volunteers: <span
+                                id="certified-volunteers">40</span>%</div>
+                        <div class="item"><span></span>Regular Volunteers: <span id="regular-volunteers">60</span>%
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+            <!-- Additional Charts: Stray Cats and Dogs Helped -->
+            <div class="chart-container">
+                <div class="pie-chart">
+                    <h3>Stray Cats Helped</h3>
+                    <div class="pie">
+                        <div class="slice" style="--offset: 0; --value: var(--stray-cats-rescued, 60);"></div>
+                        <div class="slice"
+                            style="--offset: calc(var(--stray-cats-rescued, 60) * 1%); --value: calc(100 - var(--stray-cats-rescued, 60));">
+                        </div>
+                    </div>
+                    <div class="legend">
+                        <div class="item"><span></span>Rescued: <span id="stray-cats-rescued">60</span>%</div>
+                        <div class="item"><span></span>Remaining: <span id="stray-cats-remaining">40</span>%</div>
+                    </div>
+                </div>
+                <div class="pie-chart">
+                    <h3>Stray Dogs Helped</h3>
+                    <div class="pie">
+                        <div class="slice" style="--offset: 0; --value: var(--stray-dogs-rescued, 75);"></div>
+                        <div class="slice"
+                            style="--offset: calc(var(--stray-dogs-rescued, 75) * 1%); --value: calc(100 - var(--stray-dogs-rescued, 75));">
+                        </div>
+                    </div>
+                    <div class="legend">
+                        <div class="item"><span></span>Rescued: <span id="stray-dogs-rescued">75</span>%</div>
+                        <div class="item"><span></span>Remaining: <span id="stray-dogs-remaining">25</span>%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <!-- JavaScript for updating the bar chart and pie charts with live data -->
-        <script>
-            // Function to update the bar chart and pie charts with live data
-            function updateCharts() {
-                // Update bar chart
-                var bar = document.querySelector('.bar');
-                var volunteersCount = Math.floor(Math.random() * 100);
-                bar.style.setProperty('--bar-height', volunteersCount + '%');
-
-                // Update pie charts
-                var certifiedVolunteers = Math.floor(Math.random() * 100);
-                var strayCatsRescued = Math.floor(Math.random() * 100);
-                var strayDogsRescued = Math.floor(Math.random() * 100);
-
-                document.documentElement.style.setProperty('--certified-volunteers', certifiedVolunteers);
-                document.documentElement.style.setProperty('--stray-cats-rescued', strayCatsRescued);
-                document.documentElement.style.setProperty('--stray-dogs-rescued', strayDogsRescued);
-
-                // Update legends
-                document.getElementById('certified-volunteers').textContent = certifiedVolunteers;
-                document.getElementById('regular-volunteers').textContent = 100 - certifiedVolunteers;
-                document.getElementById('stray-cats-rescued').textContent = strayCatsRescued;
-                document.getElementById('stray-cats-remaining').textContent = 100 - strayCatsRescued;
-                document.getElementById('stray-dogs-rescued').textContent = strayDogsRescued;
-                document.getElementById('stray-dogs-remaining').textContent = 100 - strayDogsRescued;
-            }
-
-            // Call the updateCharts function initially and then at regular intervals
-            updateCharts(); // Initial call
-            setInterval(updateCharts, 5000); // Call every 5 seconds (you can adjust the interval as needed)
-        </script>
-    </body>
-
-    </html>
     <!-- Contact Us Section -->
     <section id="contact" class="contact">
         <div class="container">
@@ -234,6 +247,37 @@
         </div>
     </footer>
 
+    <!-- JavaScript for updating the bar chart and pie charts with live data -->
+    <script>
+        // Function to update the bar chart and pie charts with live data
+        function updateCharts() {
+            // Update bar chart
+            var bar = document.querySelector('.bar');
+            var volunteersCount = Math.floor(Math.random() * 100);
+            bar.style.setProperty('--bar-height', volunteersCount + '%');
+
+            // Update pie charts
+            var certifiedVolunteers = Math.floor(Math.random() * 100);
+            var strayCatsRescued = Math.floor(Math.random() * 100);
+            var strayDogsRescued = Math.floor(Math.random() * 100);
+
+            document.documentElement.style.setProperty('--certified-volunteers', certifiedVolunteers);
+            document.documentElement.style.setProperty('--stray-cats-rescued', strayCatsRescued);
+            document.documentElement.style.setProperty('--stray-dogs-rescued', strayDogsRescued);
+
+            // Update legends
+            document.getElementById('certified-volunteers').textContent = certifiedVolunteers;
+            document.getElementById('regular-volunteers').textContent = 100 - certifiedVolunteers;
+            document.getElementById('stray-cats-rescued').textContent = strayCatsRescued;
+            document.getElementById('stray-cats-remaining').textContent = 100 - strayCatsRescued;
+            document.getElementById('stray-dogs-rescued').textContent = strayDogsRescued;
+            document.getElementById('stray-dogs-remaining').textContent = 100 - strayDogsRescued;
+        }
+
+        // Call the updateCharts function initially and then at regular intervals
+        updateCharts(); // Initial call
+        setInterval(updateCharts, 5000); // Call every 5 seconds (you can adjust the interval as needed)
+    </script>
 </body>
 
 </html>

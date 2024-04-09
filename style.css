@@ -10,25 +10,27 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 600px;
     margin: 0 auto;
     padding: 20px;
 }
 
 /* Navigation Bar */
 .navbar {
-    background-color: #333;
-    padding: 10px 0;
+    background-color: #f4f0f0d8;
+    padding: 10px 20px; /* Adjust padding */
 }
 
 .navbar .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 800px; /* Adjust max-width */
+    margin: auto; /* Center the navbar */
 }
 
 .logo img {
-    height: 100px; /* Adjust the height as needed */
+    height: 80px; /* Adjust the height */
 }
 
 .nav-links {
@@ -39,13 +41,14 @@ body {
 
 .nav-links li {
     display: inline;
-    margin-right: 20px;
+    margin-right: 10px; /* Adjust margin */
 }
 
 .nav-links li a {
     text-decoration: none;
-    color: #fff;
+    color: #25c919;
     font-weight: bold;
+    font-size: 16px; /* Adjust font size */
 }
 
 /* Hero Section */
