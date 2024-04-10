@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Open the pop-up when contact link is clicked
     contactPopupTrigger.addEventListener('click', function (e) {
         e.preventDefault();
-        contactPopup.style.display = 'flex'; // Use flex display to center the pop-up
+        contactPopup.style.display = 'flex';
     });
 
     // Close the pop-up when close button is clicked

@@ -1,12 +1,16 @@
 /* Resetting default margin and padding */
-body, h1, h2, p, ul, li {
+html, body, h1, h2, p, ul, li {
     margin: 0;
     padding: 0;
 }
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9; /* Apply background color to body */
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    min-height: 100vh; /* Ensure the body takes up the full viewport height */
 }
 
 .container {
@@ -41,44 +45,48 @@ nav {
     color: #fff;
     text-decoration: none;
     font-size: 16px;
+    transition: color 0.3s ease; /* Smooth transition for color change */
 }
 
 .nav-links li a:hover {
-    color: #ffcc00;
+    color: #ffcc00; /* Changed color for better readability */
 }
 
 /* Styles for hero section */
 .hero {
+    position: relative; /* Ensure proper positioning for absolute elements inside */
     background-color: #ffcc00;
-    padding: 150px 0; /* Increase padding to take more vertical space */
+    padding: 150px 0;
     text-align: center;
+    overflow: hidden; /* Hide overflow for the hero section */
 }
 
 .hero h1 {
-    font-size: 48px; /* Increase font size for a more prominent heading */
-    margin-bottom: 40px; /* Increase margin for better spacing */
+    font-size: 48px;
+    margin-bottom: 40px;
 }
 
 .search-container {
-    margin-top: 40px; /* Increase margin for better separation from heading */
+    margin-top: 40px;
 }
 
 .search-container input[type=text] {
-    padding: 15px; /* Increase padding for input field */
-    width: 60%; /* Adjust width for responsiveness */
-    max-width: 500px; /* Limit maximum width for better readability */
+    padding: 15px;
+    width: 60%;
+    max-width: 500px;
     border: none;
-    border-radius: 30px; /* Increase border radius for a more modern look */
+    border-radius: 30px;
 }
 
 .search-container button {
-    padding: 15px 30px; /* Increase padding for button */
+    padding: 15px 30px;
     background-color: #333;
     color: #fff;
     border: none;
-    border-radius: 30px; /* Increase border radius for consistency */
+    border-radius: 30px;
     cursor: pointer;
-    margin-left: 10px; /* Adjust margin for better alignment with input field */
+    margin-left: 10px;
+    transition: background-color 0.3s ease; /* Smooth transition for background color change */
 }
 
 .search-container button:hover {
@@ -86,7 +94,7 @@ nav {
 }
 
 /* Styles for about, volunteer, donate, and shelter info sections */
-.about, .volunteer, .donate, .shelter-info {
+.about, .volunteer, .donate, .shelter-info{
     background-color: #fff;
     padding: 50px 0;
 }
@@ -94,14 +102,14 @@ nav {
 .about h2, .volunteer h2, .donate h2, .shelter-info h2 {
     text-align: center;
     margin-bottom: 20px;
-    font-family: Arial, sans-serif; /* Update font family */
+    font-family: Arial, sans-serif;
 }
 
 .about p, .volunteer p, .donate p, .shelter-info p {
     text-align: center;
-    margin-bottom: 20px; /* Improved spacing between paragraphs */
-    font-family: Arial, sans-serif; /* Update font family */
-    line-height: 1.6; /* Improved line height for better readability */
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
 }
 
 /* Styles for "Become a Volunteer" and "Make a Donation" buttons */
@@ -114,9 +122,9 @@ nav {
     padding: 15px 30px;
     font-size: 18px;
     cursor: pointer;
-    text-decoration: none; /* Remove underline */
+    text-decoration: none;
     margin-top: 20px;
-    margin-left: calc(50% - 100px); /* Adjust horizontal position */
+    margin-left: calc(50% - 100px);
     display: inline-block;
 }
 
@@ -131,6 +139,16 @@ footer {
     color: #fff;
     padding: 20px 0;
     text-align: center;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+
+/* Add styles to ensure no content appears below the footer */
+body {
+    margin-bottom: 0; /* Remove bottom margin */
+    padding-bottom: 0; /* Remove bottom padding */
+    position: relative;
 }
 
 /* Styles for pop-up modal */
@@ -142,8 +160,7 @@ footer {
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5); /* Transparent background with a bit of opacity */
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .popup-content {
@@ -153,6 +170,7 @@ footer {
     border-radius: 10px;
     width: 400px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.3s ease forwards;
 }
 
 .close {
@@ -164,11 +182,9 @@ footer {
     cursor: pointer;
 }
 
-.close:hover,
-.close:focus {
+.close:hover {
     color: black;
     text-decoration: none;
-    cursor: pointer;
 }
 
 h2 {
@@ -198,22 +214,6 @@ button {
 
 button:hover {
     background-color: #f3bb00;
-}
-
-/* Animation for pop-up */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.popup-content {
-    animation: fadeIn 0.3s ease forwards;
 }
 
 /* Notification styles */
@@ -246,4 +246,17 @@ button:hover {
     100% {
         opacity: 0;
     }
+}
+
+/* Styles for semi-transparent overlay */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('background.png') center center no-repeat;
+    background-size: cover;
+    opacity: 0.5; /* Adjust opacity as needed */
+    z-index: 1; /* Ensure the overlay is above other content */
 }
