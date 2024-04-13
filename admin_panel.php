@@ -18,9 +18,9 @@ if ($conn->connect_error) {
 
 // Validate Admin Credentials
 $valid_username = "admin";
-$valid_password = "admin"; // You should use a strong password and consider hashing it
+$valid_password = "admin";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["username"]) && isset($_POST["password"])) {
     $entered_username = $_POST["username"];
     $entered_password = $_POST["password"];
 
@@ -30,19 +30,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Handle Update
+$updateMessage = "";  // Variable to store the update message
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_id"])) {
     $update_id = $_POST["update_id"];
     $new_name = $_POST["new_name"];
     $new_email = $_POST["new_email"];
     $new_message = $_POST["new_message"];
 
-    $sql_update = "UPDATE contact_messages SET name='$new_name', email='$new_email', message='$new_message' WHERE id='$update_id'";
+    // Using prepared statements to prevent SQL injection
+    $stmt = $conn->prepare("UPDATE contact_messages SET name=?, email=?, message=? WHERE id=?");
+    $stmt->bind_param("sssi", $new_name, $new_email, $new_message, $update_id);
 
-    if ($conn->query($sql_update) === TRUE) {
-        echo "<script>alert('Record updated successfully');</script>";
+    if ($stmt->execute()) {
+        $updateMessage = "Record updated successfully";
     } else {
-        echo "<script>alert('Error updating record: " . $conn->error . "');</script>";
+        $updateMessage = "Error updating record: " . $stmt->error;
     }
+
+    $stmt->close();
 }
 
 // Fetch contact messages from database
@@ -63,6 +69,11 @@ $result = $conn->query($sql);
         
         <!-- Home Button -->
         <a href="landingPage.html" class="home-button">HOME</a>
+
+        <!-- Display Update Message -->
+        <?php if (!empty($updateMessage)): ?>
+            <p class="update-message"><?php echo $updateMessage; ?></p>
+        <?php endif; ?>
 
         <table>
             <tr>

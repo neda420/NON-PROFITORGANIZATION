@@ -1,4 +1,3 @@
-/* Resetting default margin and padding */
 html, body, h1, h2, p, ul, li {
     margin: 0;
     padding: 0;
@@ -10,7 +9,7 @@ body {
     margin: 0;
     padding: 0;
     position: relative;
-    min-height: 100vh; /* Ensure the body takes up the full viewport height */
+    min-height: 100vh; 
 }
 
 .container {
@@ -18,7 +17,6 @@ body {
     margin: 0 auto;
 }
 
-/* Styles for header */
 header {
     background-color: #333;
     color: #fff;
@@ -31,7 +29,6 @@ header {
     font-weight: bold;
 }
 
-/* Styles for navigation */
 nav {
     float: right;
 }
@@ -45,14 +42,13 @@ nav {
     color: #fff;
     text-decoration: none;
     font-size: 16px;
-    transition: color 0.3s ease; /* Smooth transition for color change */
+    transition: color 0.3s ease; 
 }
 
 .nav-links li a:hover {
     color: #ffcc00; 
 }
 
-/* Styles for hero section */
 .hero {
     background-color: #ffcc00;
     padding: 150px 0;
@@ -84,7 +80,7 @@ nav {
     border-radius: 30px;
     cursor: pointer;
     margin-left: 10px;
-    transition: background-color 0.3s ease; /* Smooth transition for background color change */
+    transition: background-color 0.3s ease; 
 }
 
 .search-container button:hover {
@@ -109,8 +105,7 @@ nav {
 }
 
 /* Styles for "Become a Volunteer" and "Make a Donation" buttons */
-.volunteer .btn,
-.donate .btn {
+.volunteer .btn, .donate .btn {
     background-color: #333;
     color: #fff;
     border: none;
@@ -124,12 +119,10 @@ nav {
     display: inline-block;
 }
 
-.volunteer .btn:hover,
-.donate .btn:hover {
+.volunteer .btn:hover, .donate .btn:hover {
     background-color: #555;
 }
 
-/* Styles for footer */
 footer {
     background-color: #333;
     color: #fff;
@@ -142,8 +135,8 @@ footer {
 
 /* Styles to ensure no content appears below the footer */
 body {
-    margin-bottom: 0; /* Remove bottom margin */
-    padding-bottom: 0; /* Remove bottom padding */
+    margin-bottom: 0; 
+    padding-bottom: 0; 
     position: relative;
 }
 
