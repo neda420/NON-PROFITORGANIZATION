@@ -7,102 +7,7 @@
     <title>Helping Paws - Empowering Volunteers</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="chart.css">
-    <style>
-        /* Responsive CSS */
 
-        /* Container */
-        .container {
-            width: 90%;
-            margin: auto;
-        }
-
-        /* Navigation Bar */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-
-        .nav-links li {
-            margin-right: 20px;
-        }
-
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 100px 0;
-        }
-
-        .hero img {
-            width: 100%;
-            max-width: 600px;
-            height: auto;
-        }
-
-        /* Volunteer Now Section */
-        .volunteer {
-            text-align: center;
-            padding: 80px 0;
-        }
-
-        .volunteer-form {
-            margin-top: 40px;
-        }
-
-        .volunteer-form form {
-            max-width: 400px;
-            margin: auto;
-        }
-
-        /* About Us Section */
-        .about {
-            text-align: center;
-            padding: 80px 0;
-        }
-
-        /* Our Mission Section */
-        .mission {
-            text-align: center;
-            padding: 80px 0;
-        }
-
-        .chart-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        .chart-container:last-child {
-            margin-bottom: 0;
-        }
-
-        .bar-chart,
-        .pie-chart {
-            flex: 1;
-            max-width: 400px;
-        }
-
-        /* Contact Us Section */
-        .contact {
-            text-align: center;
-            padding: 80px 0;
-        }
-
-        /* Footer */
-        .footer {
-            background-color: #f0f0f0;
-            text-align: center;
-            padding: 20px 0;
-        }
-    </style>
 </head>
 
 <body>
@@ -180,6 +85,7 @@
                 <div class="bar-chart">
                     <h3>Volunteers Count</h3>
                     <div class="bar" style="--bar-height: calc(10% * var(--volunteers-count, 0));"></div>
+                    <span>Total Volunteers: <span id="total-volunteers"><?php echo $totalVolunteers; ?></span></span>
                 </div>
                 <!-- Pie Chart: Certified Volunteers -->
                 <div class="pie-chart">
@@ -249,22 +155,37 @@
 
     <!-- JavaScript for updating the bar chart and pie charts with live data -->
     <script>
+        // Function to fetch total volunteers count
+        function getTotalVolunteers() {
+            fetch('get_total_volunteers.php')
+                .then(response => response.json())
+                .then(data => {
+                    updateCharts(data.totalVolunteers);
+                })
+                .catch(error => {
+                    console.error('Error fetching total volunteers count:', error);
+                });
+        }
+    
         // Function to update the bar chart and pie charts with live data
-        function updateCharts() {
+        function updateCharts(totalVolunteers) {
             // Update bar chart
             var bar = document.querySelector('.bar');
-            var volunteersCount = Math.floor(Math.random() * 100);
-            bar.style.setProperty('--bar-height', volunteersCount + '%');
-
+            var barHeight = (totalVolunteers / 100) * 100; // Assuming 100% is the maximum height
+            bar.style.setProperty('--bar-height', barHeight + '%');
+    
+            // Update the total volunteers count displayed next to the bar chart
+            document.getElementById('total-volunteers').textContent = totalVolunteers;
+    
             // Update pie charts
             var certifiedVolunteers = Math.floor(Math.random() * 100);
             var strayCatsRescued = Math.floor(Math.random() * 100);
             var strayDogsRescued = Math.floor(Math.random() * 100);
-
+    
             document.documentElement.style.setProperty('--certified-volunteers', certifiedVolunteers);
             document.documentElement.style.setProperty('--stray-cats-rescued', strayCatsRescued);
             document.documentElement.style.setProperty('--stray-dogs-rescued', strayDogsRescued);
-
+    
             // Update legends
             document.getElementById('certified-volunteers').textContent = certifiedVolunteers;
             document.getElementById('regular-volunteers').textContent = 100 - certifiedVolunteers;
@@ -273,11 +194,12 @@
             document.getElementById('stray-dogs-rescued').textContent = strayDogsRescued;
             document.getElementById('stray-dogs-remaining').textContent = 100 - strayDogsRescued;
         }
-
-        // Call the updateCharts function initially and then at regular intervals
-        updateCharts(); // Initial call
-        setInterval(updateCharts, 5000); // Call every 5 seconds (you can adjust the interval as needed)
+    
+        // Call the getTotalVolunteers function initially and then at regular intervals
+        getTotalVolunteers(); // Initial call
+        setInterval(getTotalVolunteers, 5000); // Call every 5 seconds (you can adjust the interval as needed)
     </script>
+    
 </body>
 
 </html>
