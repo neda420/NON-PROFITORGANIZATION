@@ -1,0 +1,11 @@
+CREATE DATABASE IF NOT EXISTS helping_paws2;
+
+USE helping_paws2;
+
+CREATE TABLE IF NOT EXISTS contact_messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(25) NOT NULL,
+    email VARCHAR(30) NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

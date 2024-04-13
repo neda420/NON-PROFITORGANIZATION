@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,15 +11,13 @@
         <div class="container">
             <h1 class="logo">Helping Paws</h1>
             <nav>
-                <ul class="nav-links">
-                    <li><a href="#">Home</a></li>
-                    <!-- Smooth scrolling for "About" link -->
+                <ul class="nav-links">                          
                     <li><a href="#about">About</a></li>
                     <li><a href="#">Adopt</a></li>
                     <li><a href="#donate-section">Donate</a></li>
                     <li><a href="#volunteer-section">Volunteer</a></li>
-                    <!-- Contact link as a pop-up trigger -->
                     <li><a href="#" id="contact-popup-trigger">Contact</a></li>
+                    <li><a href="admin_login.html">Admin</a></li>
                 </ul>
             </nav>
         </div>
@@ -35,18 +34,19 @@
                 <li><strong>Phone:</strong> +880 1000 222222</li>
             </ul>
             <p>Alternatively, you can email us directly using the form below:</p>
-            <form id="contact-form">
-                <input type="text" id="name" placeholder="Your Name" required>
-                <input type="email" id="email" placeholder="Your Email" required>
-                <textarea id="message" placeholder="Your Message" required></textarea>
+            <form id="contact-form" action="contact_process.php" method="post">
+                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                <input type="email" id="email" name="email" placeholder="Your Email" required>
+                <textarea id="message" name="message" placeholder="Your Message" required></textarea>
                 <button type="submit">Send</button>
             </form>
+            
         </div>
     </div>
 
     <section class="hero">
         <div class="container">
-            <h1> Welcome to Helping Paws</h1>
+            <h1> Welcome to Helping Paws!</h1>
             <div class="search-container">
                 <input type="text" placeholder="Search animals...">
                 <button type="submit">Search</button>

@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Close the pop-up when clicked outside of it
     window.addEventListener('click', function (e) {
-        if (e.target == contactPopup) {
+        if (e.target === contactPopup) {
             contactPopup.style.display = 'none';
         }
     });
@@ -39,16 +39,31 @@ document.addEventListener('DOMContentLoaded', function () {
     // Submit form functionality
     document.getElementById('contact-form').addEventListener('submit', function (e) {
         e.preventDefault();        
-        const notification = document.createElement('div');
-        notification.classList.add('notification');
-        notification.textContent = 'Email sent successfully!';
-        document.body.appendChild(notification);
-        setTimeout(() => {
-            notification.style.opacity = '0';
-            setTimeout(() => {
-                document.body.removeChild(notification);
-            }, 1000);
-        }, 3000);
-        contactPopup.style.display = 'none';
+        const formData = new FormData(this);
+
+        fetch('contact_process.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                const notification = document.createElement('div');
+                notification.classList.add('notification');
+                notification.textContent = 'Email sent successfully!';
+                document.body.appendChild(notification);
+                setTimeout(() => {
+                    notification.style.opacity = '0';
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 1000);
+                }, 3000);
+                contactPopup.style.display = 'none';
+            } else {
+                throw new Error('Network response was not ok.');
+            }
+        })
+        .catch(error => {
+            console.error('Error sending email:', error);
+        });
     });
 });
