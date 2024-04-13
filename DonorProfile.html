@@ -8,23 +8,75 @@
 </head>
 <body>
     <div class="container">
-        <div class="profile-header">
-            <h2>Donor Profile</h2>
-            <!-- Display donor details here, fetched from the database -->
-            <p>Donor ID: 12345</p>
-            <p>Name: John Doe</p>
-            <p>Email: john@example.com</p>
-        </div>
-        <div class="donation-section">
-            <div class="donation-block">
-                <h3>This Month's Donation</h3>
-                <!-- Display donation amount for this month, fetched from the database -->
-                <p>$500.00</p>
-            </div>
-            <div class="donation-block">
-                <h3>Total Donation</h3>
-                <!-- Display total donation amount, fetched from the database -->
-                <p>$5000.00</p>
+        <div class="course-box">
+            <div class="wrapper">
+                <div class="right">
+                    <div class="info">
+                        <h3>Information</h3>
+                        <div class="info_data">
+                            <div class="data">
+                                <h4>Full Name</h4>
+                                <p><?php echo $row['fname'] . ' ' . $row['lname']; ?></p>
+                            </div>
+                            <div class="data">
+                                <h4>Email</h4>
+                                <p><?php echo $row['email']; ?></p>
+                            </div>
+                        </div>
+                        <div class="info_data">
+                            <div class="data">
+                                <h4>Gender</h4>
+                                <p>Male</p>
+                            </div>
+                            <div class="data">
+                                <h4>Supplier Type</h4>
+                                <p><?php echo $row['supplierType']; ?></p>
+                            </div>
+                        </div>
+                        <div class="info_data">
+                            <div class="data">
+                                <h4>Contact Number</h4>
+                                <p><?php echo $row['contactnumber']; ?></p>
+                            </div>
+                            <div class="data">
+                                <h4>Address</h4>
+                                <p><?php echo $row['house'] . ', ' . $row['street'] . ', ' . $row['thana'] . ', ' . $row['zip'] . ' ' . $row['city']; ?></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ag-format-container">
+                    <div class="ag-courses_box">
+                        <div class="ag-courses_item">
+                            <a href="#" class="ag-courses-item_link">
+                                <div class="ag-courses-item_bg"></div>
+                                <div class="ag-courses-item_title">
+                                    Total Donation
+                                </div>
+                                <div class="ag-courses-item_date-box">
+                                    BDT: 
+                                    <span class="ag-courses-item_date">
+                                        <?php echo $donation_stats['total_amount']; ?>
+                                    </span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="ag-courses_item">
+                            <a href="#" class="ag-courses-item_link">
+                                <div class="ag-courses-item_bg"></div>
+                                <div class="ag-courses-item_title">
+                                    Total Donation Made
+                                </div>
+                                <div class="ag-courses-item_date-box">
+                                    Number of Donation:
+                                    <span class="ag-courses-item_date">
+                                        <?php echo $donation_stats['total_donations']; ?>
+                                    </span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
