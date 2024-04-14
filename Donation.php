@@ -1,11 +1,12 @@
 <?php
 // Database connection
 $servername = "localhost";
-$username = "your_username";
-$password = "your_password";
-$dbname = "your_database";
-$port=3307
-$conn = new mysqli($servername, $username, $password, $dbname,$port);
+$username = "root";
+$password = "";
+$dbname = "helping_paws2";
+$port = 3307;
+
+$conn = new mysqli($servername, $username, $password, $dbname, $port);
 
 // Check connection
 if ($conn->connect_error) {
@@ -18,15 +19,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $donorName = $_POST["donorName"];
     $purpose = $_POST["purpose"];
     $amount = $_POST["amount"];
-    $date = $_POST["date"];
 
     // SQL query to insert data into Donation_T table
-    $sql = "INSERT INTO Donation_T (donor_id, donor_name, donation_purpose, amount, donation_date) 
-            VALUES (?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO Donation_T (donor_id, donor_name, donation_purpose, amount) 
+            VALUES (?, ?, ?, ?)";
     
     // Prepare and bind parameters
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("isds", $donorId, $donorName, $purpose, $amount, $date);
+    
+    if ($stmt === false) {
+        echo "Error preparing statement: " . $conn->error;
+        exit;
+    }
+
+    $bindResult = $stmt->bind_param("sssd", $donorId, $donorName, $purpose, $amount);
+    
+    if ($bindResult === false) {
+        echo "Error binding parameters: " . $stmt->error;
+        exit;
+    }
 
     // Execute the query
     if ($stmt->execute()) {
