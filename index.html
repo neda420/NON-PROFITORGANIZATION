@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helping Paws - Empowering Volunteers</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="chart.css">
+
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="img/th.jpeg" alt="Helping Paws Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#volunteer">Volunteer Now</a></li>
+                <li><a href="#mission">Our Mission</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <img src="img/helpingcatdogs.jpeg" alt="Helping Paws Hero Image">
+            <h1>Helping Paws</h1>
+            <p>Empowering volunteers to make a difference in the lives of stray cats, dogs, and other animals</p>
+            <a href="#volunteer" class="btn">Volunteer Now</a>
+        </div>
+    </section>
+
+    <!-- Volunteer Now Section -->
+    <section id="volunteer" class="volunteer">
+        <div class="container">
+            <h2>Volunteer Now</h2>
+            <p>Ready to make a difference? Join us as a volunteer and help us save more lives!</p>
+
+            <!-- Volunteer Form -->
+            <div class="volunteer-form">
+                <h3>Join Our Team</h3>
+                <form action="submit_volunteer_form.php" method="POST">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+
+                    <label for="message">Message (optional):</label>
+                    <textarea id="message" name="message" rows="4" placeholder="Enter your message"></textarea>
+
+                    <input type="submit" value="Join the Team">
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About Us</h2>
+            <p>At Helping Paws, we are dedicated to rescuing and providing care for stray cats, dogs, and other animals.
+                Our volunteers work tirelessly to ensure these animals receive the love and support they deserve.</p>
+        </div>
+    </section>
+
+    <!-- Our Mission Section -->
+    <section id="mission" class="mission">
+        <div class="container">
+            <h2>Our Mission</h2>
+            <p>Our mission is to provide shelter, medical care, and love to stray cats, dogs, and other animals in need.
+                We believe that every animal deserves a chance for a happy and healthy life.</p>
+            <!-- Bar Chart: Volunteers Count -->
+            <div class="chart-container">
+                <div class="bar-chart">
+                    <h3>Volunteers Count</h3>
+                    <div class="bar" style="--bar-height: calc(10% * var(--volunteers-count, 0));"></div>
+                    <span>Total Volunteers: <span id="total-volunteers"><?php echo $totalVolunteers; ?></span></span>
+                </div>
+                <!-- Pie Chart: Certified Volunteers -->
+                <div class="pie-chart">
+                    <h3>Certified Volunteers</h3>
+                    <div class="pie">
+                        <div class="slice" style="--offset: 0; --value: var(--certified-volunteers, 40);"></div>
+                        <div class="slice"
+                            style="--offset: calc(var(--certified-volunteers, 40) * 1%); --value: calc(100 - var(--certified-volunteers, 40));">
+                        </div>
+                    </div>
+                    <div class="legend">
+                        <div class="item"><span></span>Certified Volunteers: <span
+                                id="certified-volunteers">40</span>%</div>
+                        <div class="item"><span></span>Regular Volunteers: <span id="regular-volunteers">60</span>%
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Additional Charts: Stray Cats and Dogs Helped -->
+            <div class="chart-container">
+                <div class="pie-chart">
+                    <h3>Stray Cats Helped</h3>
+                    <div class="pie">
+                        <div class="slice" style="--offset: 0; --value: var(--stray-cats-rescued, 60);"></div>
+                        <div class="slice"
+                            style="--offset: calc(var(--stray-cats-rescued, 60) * 1%); --value: calc(100 - var(--stray-cats-rescued, 60));">
+                        </div>
+                    </div>
+                    <div class="legend">
+                        <div class="item"><span></span>Rescued: <span id="stray-cats-rescued">60</span>%</div>
+                        <div class="item"><span></span>Remaining: <span id="stray-cats-remaining">40</span>%</div>
+                    </div>
+                </div>
+                <div class="pie-chart">
+                    <h3>Stray Dogs Helped</h3>
+                    <div class="pie">
+                        <div class="slice" style="--offset: 0; --value: var(--stray-dogs-rescued, 75);"></div>
+                        <div class="slice"
+                            style="--offset: calc(var(--stray-dogs-rescued, 75) * 1%); --value: calc(100 - var(--stray-dogs-rescued, 75));">
+                        </div>
+                    </div>
+                    <div class="legend">
+                        <div class="item"><span></span>Rescued: <span id="stray-dogs-rescued">75</span>%</div>
+                        <div class="item"><span></span>Remaining: <span id="stray-dogs-remaining">25</span>%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <p>If you have any questions or would like to get involved, feel free to contact us:</p>
+            <p>Email: info@helpingpaws.org</p>
+            <p>Phone: +123-456-7890</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Helping Paws. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for updating the bar chart and pie charts with live data -->
+    <script>
+        // Function to fetch total volunteers count
+        function getTotalVolunteers() {
+            fetch('get_total_volunteers.php')
+                .then(response => response.json())
+                .then(data => {
+                    updateCharts(data.totalVolunteers);
+                })
+                .catch(error => {
+                    console.error('Error fetching total volunteers count:', error);
+                });
+        }
+    
+        // Function to update the bar chart and pie charts with live data
+        function updateCharts(totalVolunteers) {
+            // Update bar chart
+            var bar = document.querySelector('.bar');
+            var barHeight = (totalVolunteers / 100) * 100; // Assuming 100% is the maximum height
+            bar.style.setProperty('--bar-height', barHeight + '%');
+    
+            // Update the total volunteers count displayed next to the bar chart
+            document.getElementById('total-volunteers').textContent = totalVolunteers;
+    
+            // Update pie charts
+            var certifiedVolunteers = Math.floor(Math.random() * 100);
+            var strayCatsRescued = Math.floor(Math.random() * 100);
+            var strayDogsRescued = Math.floor(Math.random() * 100);
+    
+            document.documentElement.style.setProperty('--certified-volunteers', certifiedVolunteers);
+            document.documentElement.style.setProperty('--stray-cats-rescued', strayCatsRescued);
+            document.documentElement.style.setProperty('--stray-dogs-rescued', strayDogsRescued);
+    
+            // Update legends
+            document.getElementById('certified-volunteers').textContent = certifiedVolunteers;
+            document.getElementById('regular-volunteers').textContent = 100 - certifiedVolunteers;
+            document.getElementById('stray-cats-rescued').textContent = strayCatsRescued;
+            document.getElementById('stray-cats-remaining').textContent = 100 - strayCatsRescued;
+            document.getElementById('stray-dogs-rescued').textContent = strayDogsRescued;
+            document.getElementById('stray-dogs-remaining').textContent = 100 - strayDogsRescued;
+        }
+    
+        // Call the getTotalVolunteers function initially and then at regular intervals
+        getTotalVolunteers(); // Initial call
+        setInterval(getTotalVolunteers, 5000); // Call every 5 seconds (you can adjust the interval as needed)
+    </script>
+    
+</body>
+
+</html>

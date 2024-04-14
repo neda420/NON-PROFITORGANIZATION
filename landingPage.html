@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helping Paws</title>
+    <link rel="stylesheet" href="landingPage.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">Helping Paws</h1>
+            <nav>
+                <ul class="nav-links">                          
+                    <li><a href="#about">About</a></li>
+                    <li><a href="view_rescued_animals.php">Adopt</a></li>
+                    <li><a href="#donate-section">Donate</a></li>
+                    <li><a href="#volunteer-section">Volunteer</a></li>
+                    <li><a href="#" id="contact-popup-trigger">Contact</a></li>
+                    <li><a href="admin_login.html">Admin</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contact Pop-up Modal -->
+    <div id="contact-popup" class="popup">
+        <div class="popup-content">
+            <span class="close" id="close-popup">&times;</span>
+            <h2>Contact Us</h2>
+            <p>For inquiries, you can reach us through:</p>
+            <ul>
+                <li><strong>Email:</strong> animalShelter@gmail.com</li>
+                <li><strong>Phone:</strong> +880 1000 222222</li>
+            </ul>
+            <p>Alternatively, you can email us directly using the form below:</p>
+            <form id="contact-form" action="contact_process.php" method="post">
+                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                <input type="email" id="email" name="email" placeholder="Your Email" required>
+                <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+            
+        </div>
+    </div>
+
+    <section class="hero">
+        <div class="container">
+            <h1> Welcome to Helping Paws!</h1>
+            <div class="search-container">
+                <input type="text" placeholder="Search animals...">
+                <button type="submit">Search</button>
+            </div>
+        </div>       
+    </section>
+    <section class="about" id="about">
+        <div class="container">
+            <h2>About Our Organization</h2>
+            <p>We are Helping Paws, a dedicated team committed to rescuing and providing shelter for animals in need. Founded in 2010, our organization has been tirelessly working to ensure that every animal gets the love, care, and attention they deserve.</p>
+            <p>Our mission is to create a safe and loving environment for animals awaiting adoption. With the help of our volunteers and generous donors, we strive to make a difference in the lives of these animals and find them their forever homes.</p>
+            <p>At Helping Paws, we believe that every animal deserves a second chance, and we are passionate about making that possible. Join us in our journey to save and improve the lives of animals in need!</p>
+        </div>
+    </section>
+    <section id="donate-section" class="donate">
+        <div class="container">
+            <h2>Donate to Support Our Cause</h2>
+            <p>Your generous donations help us provide shelter, food, and medical care to animals in need. Every contribution makes a difference in the lives of these animals and helps us continue our mission of rescue and rehabilitation.</p>
+            <p>By donating to Helping Paws, you are directly contributing to the well-being and happiness of animals in need. Your support allows us to rescue more animals, provide necessary medical treatments, and ensure that they are properly cared for until they find their forever homes.</p>
+            <p>Together, we can make a positive impact on the lives of these animals and give them the second chance they deserve. Your donation, no matter how big or small, will help us continue our important work and save more lives.</p>
+            <a href="DonorLanding.html" class="btn">Make a Donation</a>
+        </div>
+    </section>
+    <section id="volunteer-section" class="volunteer">
+        <div class="container">
+            <h2>Volunteer With Us</h2>
+            <p>Join us in making a difference in the lives of animals by becoming a volunteer at Helping Paws. Our volunteers play a crucial role in our organization, helping with various tasks such as animal care, fundraising events, and administrative work.</p>
+            <p>Volunteering with Helping Paws is a rewarding experience that allows you to directly contribute to the well-being of animals in need. Whether you're passionate about working with animals or want to support our cause in other ways, there's a place for you in our volunteer community.</p>
+            <p>As a volunteer, you'll have the opportunity to make a positive impact on the lives of animals, meet like-minded individuals, and gain valuable skills and experience. Join us today and be a part of our mission to rescue, rehabilitate, and rehome animals in need!</p>
+            <a href="index.html" class="btn">Become a Volunteer</a>
+        </div>
+    </section>
+    <section class="shelter-info">
+        <div class="container">
+            <h2>Find Our Shelter</h2>
+            <p>Welcome to Helping Paws Animal Rescue Shelter! We are dedicated to rescuing and providing shelter for animals in need. Our shelter offers a safe and loving environment for animals awaiting adoption. Visit us today to meet our furry friends!</p>
+            
+            <div style="margin-bottom: 20px;"></div>
+            
+            <div class="map-container" style="border: 1px solid #ccc;">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.6697616445273!2d90.4357717149541!3d23.82416958456496!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755ca1e8e9fc5fb%3A0x5a25b71f6dbb0d7f!2sBashundhara%20R-A%2C%20Dhaka%201221!5e0!3m2!1sen!2sbd!4v1649487337298!5m2!1sen!2sbd" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+    
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Helping Paws | Non-Profit Organization. All Rights Reserved.</p>
+        </div>
+    </footer>
+    <script src="landingPage.js"></script>
+</body>
+</html>
