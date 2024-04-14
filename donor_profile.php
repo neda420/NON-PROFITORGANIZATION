@@ -1,30 +1,27 @@
 <?php
 session_start();
 
-// Database connection
+echo "Session in donor_profile: <br>";
+var_dump($_SESSION);
+
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "helping_paws2";
-$port = "3307";
+$port = 3307;
 
 $conn = new mysqli($servername, $username, $password, $dbname, $port);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch donor ID from URL
-$donorId = $_GET['donorId'] ?? ''; 
+$donorId = $_SESSION['donorId'] ?? '';
 
-// Debug: Print donorId to check if it's passed correctly
-echo "Donor ID: " . $donorId . "<br>";
-
-// Fetch donor information
 $sql = "SELECT donor_id, name, email, occupation, phone, address FROM donor_t WHERE donor_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $donorId);
+
 if ($stmt->execute()) {
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
@@ -32,13 +29,10 @@ if ($stmt->execute()) {
     echo "Error fetching donor information: " . $stmt->error . "<br>";
 }
 
-// Debug: Print row to check if data is fetched
-echo "Fetched row: " . print_r($row, true) . "<br>";
-
-// Fetch donation statistics
 $sql = "SELECT SUM(amount) AS total_amount, COUNT(*) AS total_donations FROM Donation_T WHERE donor_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $donorId);
+
 if ($stmt->execute()) {
     $result = $stmt->get_result();
     $donation_stats = $result->fetch_assoc();
@@ -46,15 +40,12 @@ if ($stmt->execute()) {
     echo "Error fetching donation statistics: " . $stmt->error . "<br>";
 }
 
-// Debug: Print donation_stats to check if data is fetched
-echo "Donation stats: " . print_r($donation_stats, true) . "<br>";
-
-// Get the current host and path
 $host = $_SERVER['HTTP_HOST'];
 $uri = $_SERVER['REQUEST_URI'];
 $cssPath = "css/donorprofile.css";
-
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -76,27 +67,27 @@ $cssPath = "css/donorprofile.css";
                         <div class="info_data">
                             <div class="data">
                                 <h4>Full Name</h4>
-                                <p><?php echo $row['name'] ?? 'N/A'; ?></p>
+                                <p><?php echo $row['name'] ; ?></p>
                             </div>
                             <div class="data">
                                 <h4>Email</h4>
-                                <p><?php echo $row['email'] ?? 'N/A'; ?></p>
+                                <p><?php echo $row['email'] ; ?></p>
                             </div>
                         </div>
                         <div class="info_data">
                             <div class="data">
                                 <h4>Occupation</h4>
-                                <p><?php echo $row['occupation'] ?? 'N/A'; ?></p>
+                                <p><?php echo $row['occupation'] ; ?></p>
                             </div>
                         </div>
                         <div class="info_data">
                             <div class="data">
                                 <h4>Contact Number</h4>
-                                <p><?php echo $row['phone'] ?? 'N/A'; ?></p>
+                                <p><?php echo $row['phone'] ; ?></p>
                             </div>
                             <div class="data">
                                 <h4>Address</h4>
-                                <p><?php echo $row['address'] ?? 'N/A'; ?></p>
+                                <p><?php echo $row['address'] ; ?></p>
                             </div>
                         </div>
                     </div>

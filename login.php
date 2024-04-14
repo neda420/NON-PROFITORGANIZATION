@@ -1,8 +1,10 @@
 <?php
+session_start();
+
 $servername = "localhost";
-$username = "root"; // Your MySQL username
-$password = ""; // Your MySQL password
-$dbname = "helping_paws2"; // Your database name
+$username = "root";
+$password = "";
+$dbname = "helping_paws2";
 $port = 3307;
 
 // Create connection
@@ -18,16 +20,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $donor_id = $_POST["donorId"];
         $password = $_POST["password"];
         
-        // To prevent SQL injection
         $donor_id = mysqli_real_escape_string($conn, $donor_id);
         $password = mysqli_real_escape_string($conn, $password);
+
+        $_SESSION['donorId'] = $donor_id;  // Assigning to session
+
+        // Debugging
+        echo "Session after login: <br>";
+        var_dump($_SESSION);
 
         $sql = "SELECT * FROM donor_t WHERE donor_id = '$donor_id' AND password = '$password'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             // Login successful
-            header("Location: Donor.html");
+            header("Location: http://localhost/meraj's/donor_profile.php?donorId=" . $donor_id);
             exit();
         } else {
             // Login failed
