@@ -48,8 +48,10 @@
         <div class="container">
             <h1> Welcome to Helping Paws!</h1>
             <div class="search-container">
-                <input type="text" placeholder="Search animals...">
-                <button type="submit">Search</button>
+                <form id="search-form" action="search_rescued_animals.php" method="post">
+                    <input type="text" id="search" name="search" placeholder="Search animals...">
+                    <button type="submit">Search</button>
+                </form>
             </div>
         </div>       
     </section>
