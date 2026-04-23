@@ -88,7 +88,7 @@
                     <div class="bar-track">
                         <div class="bar" id="volunteer-bar"></div>
                     </div>
-                    <span>Total Volunteers: <span id="total-volunteers">0</span></span>
+                    <span>Total Volunteers: <span id="total-volunteers">…</span></span>
                 </div>
                 <!-- Pie Chart: Certified Volunteers -->
                 <div class="pie-chart">
@@ -152,6 +152,7 @@
                 })
                 .catch(error => {
                     console.error('Error fetching total volunteers count:', error);
+                    document.getElementById('total-volunteers').textContent = 'N/A';
                 });
         }
     
