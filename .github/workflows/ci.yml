@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: ["**"]
 
+# Restrict default GITHUB_TOKEN permissions to read-only.
+permissions:
+  contents: read
+
 jobs:
   # ──────────────────────────────────────────────────────────
   # 1. PHP syntax check + lint
@@ -13,6 +17,8 @@ jobs:
   php-lint:
     name: PHP Syntax & Lint
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
@@ -46,6 +52,8 @@ jobs:
   security-scan:
     name: Security Scan
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
@@ -92,6 +100,8 @@ jobs:
   docker-build:
     name: Docker Build
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - uses: actions/checkout@v4

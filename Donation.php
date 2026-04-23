@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 verifyCsrfToken();
 
-$donorId   = (int)$_SESSION['donorId'];
+$donorId   = (string)$_SESSION['donorId'];
 $donorName = inputString($_POST['donorName'] ?? '', 100);
 $purpose   = inputString($_POST['purpose']   ?? '', 50);
 $amount    = inputFloat($_POST['amount']     ?? '');
@@ -37,7 +37,7 @@ $stmt = $conn->prepare(
     'INSERT INTO Donation_T (donor_id, donor_name, donation_purpose, amount)
      VALUES (?, ?, ?, ?)'
 );
-$stmt->bind_param('issd', $donorId, $donorName, $purpose, $amount);
+$stmt->bind_param('sssd', $donorId, $donorName, $purpose, $amount);
 
 if ($stmt->execute()) {
     logInfo('Donation recorded', [

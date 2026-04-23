@@ -11,7 +11,7 @@ session_start();
 require_once __DIR__ . '/src/middleware/require_auth.php';
 
 $conn    = getDbConnection();
-$donorId = (int)$_SESSION['donorId'];
+$donorId = (string)$_SESSION['donorId'];
 
 $stmt = $conn->prepare(
     'SELECT donor_id, name, email, occupation, phone, address
@@ -19,7 +19,7 @@ $stmt = $conn->prepare(
       WHERE donor_id = ?
       LIMIT 1'
 );
-$stmt->bind_param('i', $donorId);
+$stmt->bind_param('s', $donorId);
 $stmt->execute();
 $row = $stmt->get_result()->fetch_assoc();
 $stmt->close();
@@ -30,7 +30,7 @@ $stmt = $conn->prepare(
        FROM Donation_T
       WHERE donor_id = ?'
 );
-$stmt->bind_param('i', $donorId);
+$stmt->bind_param('s', $donorId);
 $stmt->execute();
 $donationStats = $stmt->get_result()->fetch_assoc();
 $stmt->close();

@@ -11,7 +11,7 @@ session_start();
 require_once __DIR__ . '/src/middleware/require_auth.php';
 
 $conn    = getDbConnection();
-$donorId = (int)$_SESSION['donorId'];
+$donorId = (string)$_SESSION['donorId'];
 
 // Only show donations for the logged-in donor.
 $stmt = $conn->prepare(
@@ -20,7 +20,7 @@ $stmt = $conn->prepare(
       WHERE donor_id = ?
       ORDER BY donation_date DESC'
 );
-$stmt->bind_param('i', $donorId);
+$stmt->bind_param('s', $donorId);
 $stmt->execute();
 $result = $stmt->get_result();
 ?>

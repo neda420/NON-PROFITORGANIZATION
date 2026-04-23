@@ -23,9 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_id'])) {
     $newName    = inputString($_POST['new_name']    ?? '', 100);
     $newEmail   = inputEmail($_POST['new_email']    ?? '');
     $newMessage = inputString($_POST['new_message'] ?? '', 1000);
-    $adminId    = (int)$_SESSION['admin_id'];
+    $adminId    = filter_var($_SESSION['admin_id'] ?? '', FILTER_VALIDATE_INT);
 
-    if ($updateId === null || $newName === '' || $newEmail === '') {
+    if ($updateId === null || $newName === '' || $newEmail === '' || $adminId === false || $adminId < 1) {
         $updateMessage = 'Invalid input supplied.';
     } else {
         $stmt = $conn->prepare(
