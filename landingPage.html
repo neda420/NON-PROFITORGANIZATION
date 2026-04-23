@@ -3,103 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Helping Paws</title>
+    <meta name="description" content="Helping Paws – rescuing and rehoming stray cats, dogs, and other animals since 2010.">
+    <title>Helping Paws | Non-Profit Animal Rescue</title>
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="landingPage.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1 class="logo">Helping Paws</h1>
-            <nav>
-                <ul class="nav-links">                          
-                    <li><a href="#about">About</a></li>
-                    <li><a href="view_rescued_animals.php">Adopt</a></li>
-                    <li><a href="#donate-section">Donate</a></li>
-                    <li><a href="#volunteer-section">Volunteer</a></li>
-                    <li><a href="#" id="contact-popup-trigger">Contact</a></li>
-                    <li><a href="admin_login.html">Admin</a></li>
-                </ul>
+
+    <!-- ── Navigation ─────────────────────────────────────── -->
+    <header class="site-header" id="site-header">
+        <div class="container nav-inner">
+            <a href="landingPage.html" class="brand">🐾 Helping Paws</a>
+
+            <nav class="nav-links" id="nav-links" aria-label="Primary navigation">
+                <li><a href="#about">About</a></li>
+                <li><a href="search_rescued_animals.php">Adopt</a></li>
+                <li><a href="#donate-section">Donate</a></li>
+                <li><a href="#volunteer-section">Volunteer</a></li>
+                <li><a href="#stats-section">Impact</a></li>
+                <li><a href="#" id="contact-popup-trigger">Contact</a></li>
+                <li><a href="admin_login.html" class="nav-admin">Admin</a></li>
             </nav>
+
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </header>
 
-    <!-- Contact Pop-up Modal -->
-    <div id="contact-popup" class="popup">
+    <!-- ── Contact Pop-up Modal ───────────────────────────── -->
+    <div id="contact-popup" class="popup" role="dialog" aria-modal="true" aria-labelledby="popup-title">
         <div class="popup-content">
-            <span class="close" id="close-popup">&times;</span>
-            <h2>Contact Us</h2>
-            <p>For inquiries, you can reach us through:</p>
-            <ul>
-                <li><strong>Email:</strong> animalShelter@gmail.com</li>
-                <li><strong>Phone:</strong> +880 1000 222222</li>
+            <button class="close" id="close-popup" aria-label="Close contact form">&times;</button>
+            <h2 id="popup-title">Contact Us</h2>
+            <p>Reach us directly:</p>
+            <ul class="contact-list">
+                <li>📧 <strong>Email:</strong> animalShelter@gmail.com</li>
+                <li>📞 <strong>Phone:</strong> +880 1000 222222</li>
             </ul>
-            <p>Alternatively, you can email us directly using the form below:</p>
+            <p>Or send a message:</p>
             <form id="contact-form" action="contact_process.php" method="post">
-                <input type="text" id="name" name="name" placeholder="Your Name" required>
-                <input type="email" id="email" name="email" placeholder="Your Email" required>
-                <textarea id="message" name="message" placeholder="Your Message" required></textarea>
-                <button type="submit">Send</button>
+                <input type="text" id="contact-name" name="name" placeholder="Your Name" required>
+                <input type="email" id="contact-email" name="email" placeholder="Your Email" required>
+                <textarea id="contact-message" name="message" placeholder="Your Message" required></textarea>
+                <button type="submit">Send Message</button>
             </form>
-            
         </div>
     </div>
 
-    <section class="hero">
-        <div class="container">
-            <h1> Welcome to Helping Paws!</h1>
-            <div class="search-container">
-                <form id="search-form" action="search_rescued_animals.php" method="post">
-                    <input type="text" id="search" name="search" placeholder="Search animals...">
-                    <button type="submit">Search</button>
-                </form>
+    <!-- ── Hero ───────────────────────────────────────────── -->
+    <section class="hero" id="hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <span class="hero-badge">Non-Profit Animal Rescue</span>
+            <h1>Every Animal Deserves a Second Chance</h1>
+            <p>Helping Paws rescues stray cats, dogs, and other animals — giving them shelter, medical care, and the love they deserve until they find their forever home.</p>
+            <div class="hero-actions">
+                <a href="DonorLanding.html" class="btn btn-primary">Donate Now</a>
+                <a href="#volunteer-section" class="btn btn-outline">Volunteer</a>
             </div>
-        </div>       
+        </div>
+        <a href="#about" class="scroll-hint" aria-label="Scroll down">&#8595;</a>
     </section>
-    <section class="about" id="about">
-        <div class="container">
-            <h2>About Our Organization</h2>
-            <p>We are Helping Paws, a dedicated team committed to rescuing and providing shelter for animals in need. Founded in 2010, our organization has been tirelessly working to ensure that every animal gets the love, care, and attention they deserve.</p>
-            <p>Our mission is to create a safe and loving environment for animals awaiting adoption. With the help of our volunteers and generous donors, we strive to make a difference in the lives of these animals and find them their forever homes.</p>
-            <p>At Helping Paws, we believe that every animal deserves a second chance, and we are passionate about making that possible. Join us in our journey to save and improve the lives of animals in need!</p>
+
+    <!-- ── Stats Banner ───────────────────────────────────── -->
+    <section class="stats-banner" id="stats-section">
+        <div class="container stats-grid">
+            <div class="stat-card">
+                <span class="stat-number" data-target="1200">0</span>
+                <span class="stat-label">Animals Rescued</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" data-target="340">0</span>
+                <span class="stat-label">Active Volunteers</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" data-target="890">0</span>
+                <span class="stat-label">Adoptions</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" data-target="14">0</span>
+                <span class="stat-label">Years of Service</span>
+            </div>
         </div>
     </section>
-    <section id="donate-section" class="donate">
-        <div class="container">
-            <h2>Donate to Support Our Cause</h2>
-            <p>Your generous donations help us provide shelter, food, and medical care to animals in need. Every contribution makes a difference in the lives of these animals and helps us continue our mission of rescue and rehabilitation.</p>
-            <p>By donating to Helping Paws, you are directly contributing to the well-being and happiness of animals in need. Your support allows us to rescue more animals, provide necessary medical treatments, and ensure that they are properly cared for until they find their forever homes.</p>
-            <p>Together, we can make a positive impact on the lives of these animals and give them the second chance they deserve. Your donation, no matter how big or small, will help us continue our important work and save more lives.</p>
-            <a href="DonorLanding.html" class="btn">Make a Donation</a>
+
+    <!-- ── About ──────────────────────────────────────────── -->
+    <section class="section about" id="about">
+        <div class="container about-inner">
+            <div class="section-text">
+                <span class="section-badge">Who We Are</span>
+                <h2>About Our Organization</h2>
+                <p>Founded in 2010, Helping Paws is a volunteer-driven non-profit dedicated to rescuing, rehabilitating, and rehoming stray and abandoned animals.</p>
+                <p>Our team of caring volunteers works around the clock — providing food, shelter, and medical attention — until every animal finds a warm, loving forever home.</p>
+                <a href="Donor.html" class="btn btn-secondary">Learn More</a>
+            </div>
+            <div class="about-image">
+                <img src="img/helpingcatdogs.jpeg" alt="Volunteers caring for rescued animals" loading="lazy">
+            </div>
         </div>
     </section>
-    <section id="volunteer-section" class="volunteer">
+
+    <!-- ── Donate ─────────────────────────────────────────── -->
+    <section class="section donate" id="donate-section">
         <div class="container">
+            <span class="section-badge">Support Our Work</span>
+            <h2>Make a Donation</h2>
+            <p class="section-subtitle">Your contribution provides shelter, food, and medical care for animals in need. Every dollar makes a difference.</p>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">🏠</div>
+                    <h3>Shelter</h3>
+                    <p>Help us maintain a safe, clean facility for our rescues.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🍖</div>
+                    <h3>Food &amp; Nutrition</h3>
+                    <p>Fund daily meals and special diets for recovering animals.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💉</div>
+                    <h3>Medical Care</h3>
+                    <p>Cover vet visits, surgeries, and vaccinations.</p>
+                </div>
+            </div>
+            <div class="section-cta">
+                <a href="DonorLanding.html" class="btn btn-primary">Donate Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Volunteer ──────────────────────────────────────── -->
+    <section class="section volunteer" id="volunteer-section">
+        <div class="container">
+            <span class="section-badge">Join the Team</span>
             <h2>Volunteer With Us</h2>
-            <p>Join us in making a difference in the lives of animals by becoming a volunteer at Helping Paws. Our volunteers play a crucial role in our organization, helping with various tasks such as animal care, fundraising events, and administrative work.</p>
-            <p>Volunteering with Helping Paws is a rewarding experience that allows you to directly contribute to the well-being of animals in need. Whether you're passionate about working with animals or want to support our cause in other ways, there's a place for you in our volunteer community.</p>
-            <p>As a volunteer, you'll have the opportunity to make a positive impact on the lives of animals, meet like-minded individuals, and gain valuable skills and experience. Join us today and be a part of our mission to rescue, rehabilitate, and rehome animals in need!</p>
-            <a href="index.html" class="btn">Become a Volunteer</a>
-        </div>
-    </section>
-    <section class="shelter-info">
-        <div class="container">
-            <h2>Find Our Shelter</h2>
-            <p>Welcome to Helping Paws Animal Rescue Shelter! We are dedicated to rescuing and providing shelter for animals in need. Our shelter offers a safe and loving environment for animals awaiting adoption. Visit us today to meet our furry friends!</p>
-            
-            <div style="margin-bottom: 20px;"></div>
-            
-            <div class="map-container" style="border: 1px solid #ccc;">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.6697616445273!2d90.4357717149541!3d23.82416958456496!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755ca1e8e9fc5fb%3A0x5a25b71f6dbb0d7f!2sBashundhara%20R-A%2C%20Dhaka%201221!5e0!3m2!1sen!2sbd!4v1649487337298!5m2!1sen!2sbd" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            <p class="section-subtitle">Whether you love animals, events, or admin work — there's a role for you. Be part of our mission.</p>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">🐕</div>
+                    <h3>Animal Care</h3>
+                    <p>Help feed, walk, and socialize our rescued animals every day.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📢</div>
+                    <h3>Fundraising</h3>
+                    <p>Organise events and campaigns to raise vital funds.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🖥️</div>
+                    <h3>Admin &amp; Outreach</h3>
+                    <p>Support us with communications, social media, and data entry.</p>
+                </div>
+            </div>
+            <div class="section-cta">
+                <a href="index.html" class="btn btn-primary">Become a Volunteer</a>
             </div>
         </div>
     </section>
-    
-    
-    <footer>
+
+    <!-- ── Shelter Location ───────────────────────────────── -->
+    <section class="section shelter-info" id="shelter">
         <div class="container">
-            <p>&copy; 2024 Helping Paws | Non-Profit Organization. All Rights Reserved.</p>
+            <span class="section-badge">Find Us</span>
+            <h2>Visit Our Shelter</h2>
+            <p class="section-subtitle">Come meet our animals and see the work we do every day.</p>
+            <div class="map-container">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.6697616445273!2d90.4357717149541!3d23.82416958456496!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755ca1e8e9fc5fb%3A0x5a25b71f6dbb0d7f!2sBashundhara%20R-A%2C%20Dhaka%201221!5e0!3m2!1sen!2sbd!4v1649487337298!5m2!1sen!2sbd"
+                    width="100%" height="380" style="border:0;" allowfullscreen="" loading="lazy"
+                    title="Shelter location map">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Footer ─────────────────────────────────────────── -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <span class="brand">🐾 Helping Paws</span>
+                <p>Rescuing &amp; rehoming since 2010.</p>
+            </div>
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="#about">About</a>
+                <a href="DonorLanding.html">Donate</a>
+                <a href="index.html">Volunteer</a>
+                <a href="search_rescued_animals.php">Adopt</a>
+                <a href="admin_login.html">Admin</a>
+            </nav>
+            <p class="footer-copy">&copy; 2024 Helping Paws | Non-Profit Organization. All Rights Reserved.</p>
         </div>
     </footer>
+
     <script src="landingPage.js"></script>
 </body>
 </html>
+

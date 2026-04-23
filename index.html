@@ -19,6 +19,7 @@
                 <img src="img/th.jpeg" alt="Helping Paws Logo">
             </div>
             <ul class="nav-links">
+                <li><a href="landingPage.html">Home</a></li>
                 <li><a href="#about">About Us</a></li>
                 <li><a href="#volunteer">Volunteer Now</a></li>
                 <li><a href="#mission">Our Mission</a></li>
@@ -84,22 +85,19 @@
             <div class="chart-container">
                 <div class="bar-chart">
                     <h3>Volunteers Count</h3>
-                    <div class="bar" style="--bar-height: calc(10% * var(--volunteers-count, 0));"></div>
-                    <span>Total Volunteers: <span id="total-volunteers"><?php echo $totalVolunteers; ?></span></span>
+                    <div class="bar-track">
+                        <div class="bar" id="volunteer-bar"></div>
+                    </div>
+                    <span>Total Volunteers: <span id="total-volunteers">0</span></span>
                 </div>
                 <!-- Pie Chart: Certified Volunteers -->
                 <div class="pie-chart">
                     <h3>Certified Volunteers</h3>
-                    <div class="pie">
-                        <div class="slice" style="--offset: 0; --value: var(--certified-volunteers, 40);"></div>
-                        <div class="slice"
-                            style="--offset: calc(var(--certified-volunteers, 40) * 1%); --value: calc(100 - var(--certified-volunteers, 40));">
-                        </div>
-                    </div>
+                    <div class="pie" id="pie-certified" style="--primary-pct: 40;"></div>
                     <div class="legend">
-                        <div class="item"><span></span>Certified Volunteers: <span
+                        <div class="item"><span class="swatch"></span>Certified: <span
                                 id="certified-volunteers">40</span>%</div>
-                        <div class="item"><span></span>Regular Volunteers: <span id="regular-volunteers">60</span>%
+                        <div class="item"><span class="swatch"></span>Regular: <span id="regular-volunteers">60</span>%
                         </div>
                     </div>
                 </div>
@@ -108,28 +106,18 @@
             <div class="chart-container">
                 <div class="pie-chart">
                     <h3>Stray Cats Helped</h3>
-                    <div class="pie">
-                        <div class="slice" style="--offset: 0; --value: var(--stray-cats-rescued, 60);"></div>
-                        <div class="slice"
-                            style="--offset: calc(var(--stray-cats-rescued, 60) * 1%); --value: calc(100 - var(--stray-cats-rescued, 60));">
-                        </div>
-                    </div>
+                    <div class="pie" id="pie-cats" style="--primary-pct: 60;"></div>
                     <div class="legend">
-                        <div class="item"><span></span>Rescued: <span id="stray-cats-rescued">60</span>%</div>
-                        <div class="item"><span></span>Remaining: <span id="stray-cats-remaining">40</span>%</div>
+                        <div class="item"><span class="swatch"></span>Rescued: <span id="stray-cats-rescued">60</span>%</div>
+                        <div class="item"><span class="swatch"></span>Remaining: <span id="stray-cats-remaining">40</span>%</div>
                     </div>
                 </div>
                 <div class="pie-chart">
                     <h3>Stray Dogs Helped</h3>
-                    <div class="pie">
-                        <div class="slice" style="--offset: 0; --value: var(--stray-dogs-rescued, 75);"></div>
-                        <div class="slice"
-                            style="--offset: calc(var(--stray-dogs-rescued, 75) * 1%); --value: calc(100 - var(--stray-dogs-rescued, 75));">
-                        </div>
-                    </div>
+                    <div class="pie" id="pie-dogs" style="--primary-pct: 75;"></div>
                     <div class="legend">
-                        <div class="item"><span></span>Rescued: <span id="stray-dogs-rescued">75</span>%</div>
-                        <div class="item"><span></span>Remaining: <span id="stray-dogs-remaining">25</span>%</div>
+                        <div class="item"><span class="swatch"></span>Rescued: <span id="stray-dogs-rescued">75</span>%</div>
+                        <div class="item"><span class="swatch"></span>Remaining: <span id="stray-dogs-remaining">25</span>%</div>
                     </div>
                 </div>
             </div>
@@ -169,30 +157,30 @@
     
         // Function to update the bar chart and pie charts with live data
         function updateCharts(totalVolunteers) {
-            // Update bar chart
-            var bar = document.querySelector('.bar');
-            var barHeight = (totalVolunteers / 100) * 100; // Assuming 100% is the maximum height
-            bar.style.setProperty('--bar-height', barHeight + '%');
-    
-            // Update the total volunteers count displayed next to the bar chart
+            // Update bar chart height (cap at 100%)
+            var bar = document.getElementById('volunteer-bar');
+            var barHeight = Math.min((totalVolunteers / 100) * 100, 100);
+            bar.style.height = barHeight + '%';
+
+            // Update the total volunteers count
             document.getElementById('total-volunteers').textContent = totalVolunteers;
-    
-            // Update pie charts
+
+            // Update pie charts with random demo data
             var certifiedVolunteers = Math.floor(Math.random() * 100);
-            var strayCatsRescued = Math.floor(Math.random() * 100);
-            var strayDogsRescued = Math.floor(Math.random() * 100);
-    
-            document.documentElement.style.setProperty('--certified-volunteers', certifiedVolunteers);
-            document.documentElement.style.setProperty('--stray-cats-rescued', strayCatsRescued);
-            document.documentElement.style.setProperty('--stray-dogs-rescued', strayDogsRescued);
-    
+            var strayCatsRescued    = Math.floor(Math.random() * 100);
+            var strayDogsRescued    = Math.floor(Math.random() * 100);
+
+            document.getElementById('pie-certified').style.setProperty('--primary-pct', certifiedVolunteers);
+            document.getElementById('pie-cats').style.setProperty('--primary-pct', strayCatsRescued);
+            document.getElementById('pie-dogs').style.setProperty('--primary-pct', strayDogsRescued);
+
             // Update legends
-            document.getElementById('certified-volunteers').textContent = certifiedVolunteers;
-            document.getElementById('regular-volunteers').textContent = 100 - certifiedVolunteers;
-            document.getElementById('stray-cats-rescued').textContent = strayCatsRescued;
-            document.getElementById('stray-cats-remaining').textContent = 100 - strayCatsRescued;
-            document.getElementById('stray-dogs-rescued').textContent = strayDogsRescued;
-            document.getElementById('stray-dogs-remaining').textContent = 100 - strayDogsRescued;
+            document.getElementById('certified-volunteers').textContent  = certifiedVolunteers;
+            document.getElementById('regular-volunteers').textContent    = 100 - certifiedVolunteers;
+            document.getElementById('stray-cats-rescued').textContent    = strayCatsRescued;
+            document.getElementById('stray-cats-remaining').textContent  = 100 - strayCatsRescued;
+            document.getElementById('stray-dogs-rescued').textContent    = strayDogsRescued;
+            document.getElementById('stray-dogs-remaining').textContent  = 100 - strayDogsRescued;
         }
     
         // Call the getTotalVolunteers function initially and then at regular intervals
