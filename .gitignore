@@ -1,0 +1,30 @@
+# ── Secrets & environment ──────────────────────────────────
+.env
+*.env.local
+*.env.production
+
+# ── Application logs ───────────────────────────────────────
+logs/
+*.log
+
+# ── OS / IDE artefacts ─────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ── Composer (if added in future) ──────────────────────────
+vendor/
+composer.lock
+
+# ── Node (if added in future) ──────────────────────────────
+node_modules/
+npm-debug.log*
+
+# ── Docker override files ──────────────────────────────────
+docker-compose.override.yml
+
+# ── Uploaded files (user content) ─────────────────────────
+uploads/

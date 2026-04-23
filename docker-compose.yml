@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "8080:80"
+    volumes:
+      - app_logs:/var/www/html/logs
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - internal
+
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE:      ${DB_NAME:-helping_paws2}
+      MYSQL_USER:          ${DB_USERNAME:-helping_paws_user}
+      MYSQL_PASSWORD:      ${DB_PASSWORD:-CHANGE_ME}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-CHANGE_ME_ROOT}
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./migrations/001_initial_schema.sql:/docker-entrypoint-initdb.d/001_initial_schema.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD:-CHANGE_ME_ROOT}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - internal
+
+volumes:
+  db_data:
+  app_logs:
+
+networks:
+  internal:
+    driver: bridge

@@ -1,59 +1,47 @@
 <?php
-// Database connection parameters
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "helping_paws2";
-$port = "3307";
+declare(strict_types=1);
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname, $port);
+require_once __DIR__ . '/src/config/app.php';
+require_once __DIR__ . '/src/helpers/csrf.php';
+require_once __DIR__ . '/src/helpers/flash.php';
+require_once __DIR__ . '/src/helpers/logger.php';
+require_once __DIR__ . '/src/helpers/sanitize.php';
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+session_start();
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: index.html');
+    exit;
 }
 
-// Get form data
-$name = isset($_POST['name']) ? $_POST['name'] : '';
-$email = isset($_POST['email']) ? $_POST['email'] : '';
-$phone = isset($_POST['phone']) ? $_POST['phone'] : '';
-$message = isset($_POST['message']) ? $_POST['message'] : '';
+verifyCsrfToken();
 
-// Prepare SQL statement
-$sql = "INSERT INTO VOLUNTEER_TABLE (name, email, phone, message) VALUES (?, ?, ?, ?)";
+$name    = inputString($_POST['name']    ?? '', 100);
+$email   = inputEmail($_POST['email']   ?? '');
+$phone   = inputNumericString($_POST['phone']   ?? '', 20);
+$message = inputString($_POST['message'] ?? '', 1000);
 
-// Prepare and bind parameters
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("ssss", $name, $email, $phone, $message);
+if ($name === '' || $email === '') {
+    flashSet('error', 'Name and email are required.');
+    header('Location: index.html');
+    exit;
+}
 
-// Execute the statement
-$insertResult = $stmt->execute();
+$conn = getDbConnection();
 
-// Check if the record was inserted successfully
-if ($insertResult) {
-    echo "New record created successfully";
+$stmt = $conn->prepare(
+    'INSERT INTO VOLUNTEER_TABLE (name, email, phone, message) VALUES (?, ?, ?, ?)'
+);
+$stmt->bind_param('ssss', $name, $email, $phone, $message);
+
+if ($stmt->execute()) {
+    logInfo('Volunteer registered', ['email' => $email]);
+    flashSet('success', 'Thank you for signing up as a volunteer! We will be in touch.');
 } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+    logError('Volunteer insert failed', ['error' => $stmt->error]);
+    flashSet('error', 'Registration failed. Please try again.');
 }
 
-// Fetch total number of volunteers
-$sql_count = "SELECT COUNT(*) as total FROM VOLUNTEER_TABLE";
-$result = $conn->query($sql_count);
-
-if ($result && $result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $totalVolunteers = $row['total'];
-} else {
-    $totalVolunteers = 0; // Default value if no volunteers
-}
-
-// Close the statement
 $stmt->close();
-
-// Close the connection
-$conn->close();
-
-// Return total number of volunteers as JSON
-echo json_encode(array('totalVolunteers' => $totalVolunteers));
-?>
+header('Location: index.html');
+exit;
