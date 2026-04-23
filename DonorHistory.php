@@ -1,74 +1,61 @@
 <?php
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "helping_paws2";
-$port = 3307;
+declare(strict_types=1);
 
-$conn = new mysqli($servername, $username, $password, $dbname, $port);
+require_once __DIR__ . '/src/config/app.php';
+require_once __DIR__ . '/src/helpers/sanitize.php';
+require_once __DIR__ . '/src/helpers/flash.php';
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+session_start();
 
-// Fetch donor history from database
-$sql = "SELECT donor_name, donation_purpose, amount FROM Donation_T";
-$result = $conn->query($sql);
+// Require donor authentication.
+require_once __DIR__ . '/src/middleware/require_auth.php';
 
-// Get the current directory path
-$dir = dirname($_SERVER['PHP_SELF']);
-$cssPath = $dir . '/css/donor_history.css';
+$conn    = getDbConnection();
+$donorId = (string)$_SESSION['donorId'];
 
+// Only show donations for the logged-in donor.
+$stmt = $conn->prepare(
+    'SELECT donor_name, donation_purpose, amount, donation_date
+       FROM Donation_T
+      WHERE donor_id = ?
+      ORDER BY donation_date DESC'
+);
+$stmt->bind_param('s', $donorId);
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donor History</title>
-    <link rel="stylesheet" href="<?php echo $cssPath; ?>">
+    <title>Donation History | Helping Paws</title>
+    <link rel="stylesheet" href="css/donor_history.css">
 </head>
 <body>
-    <div class="table-box">
-        <div class="table-row table-head">
-            <div class="table-cell first-cell">
-                <p>Donor Name</p>
-            </div>
-            <div class="table-cell">
-                <p>Donation Purpose</p>
-            </div>
-            <div class="table-cell">
-                <p>Donation Amount</p>
-            </div>
-            <div class="table-cell last-cell">
-                <p>Date</p>
-            </div>
-        </div>
-
-        <?php
-        // Display donor history dynamically
-        if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                echo '<div class="table-row">';
-                echo '<div class="table-cell first-cell"><p>' . $row["donor_name"] . '</p></div>';
-                echo '<div class="table-cell"><p>' . $row["donation_purpose"] . '</p></div>';
-                echo '<div class="table-cell"><p>' . $row["amount"] . '</p></div>';
-                echo '<div class="table-cell last-cell"><a> Update </a> <a> Delete </a></div>';
-                echo '</div>';
-            }
-        } else {
-            echo '<p>No records found.</p>';
-        }
-        ?>
-
+<div class="table-box">
+    <?php flashRender(); ?>
+    <div class="table-row table-head">
+        <div class="table-cell first-cell"><p>Donor Name</p></div>
+        <div class="table-cell"><p>Donation Purpose</p></div>
+        <div class="table-cell"><p>Donation Amount (BDT)</p></div>
+        <div class="table-cell last-cell"><p>Date</p></div>
     </div>
+
+    <?php if ($result->num_rows > 0): ?>
+        <?php while ($row = $result->fetch_assoc()): ?>
+            <div class="table-row">
+                <div class="table-cell first-cell"><p><?php echo e($row['donor_name']); ?></p></div>
+                <div class="table-cell"><p><?php echo e($row['donation_purpose']); ?></p></div>
+                <div class="table-cell"><p><?php echo e(number_format((float)$row['amount'], 2)); ?></p></div>
+                <div class="table-cell last-cell"><p><?php echo e($row['donation_date'] ?? '—'); ?></p></div>
+            </div>
+        <?php endwhile; ?>
+    <?php else: ?>
+        <p class="no-records">No donation records found.</p>
+    <?php endif; ?>
+
+    <?php $stmt->close(); ?>
+</div>
 </body>
 </html>
-
-<?php
-// Close database connection
-$conn->close();
-?>

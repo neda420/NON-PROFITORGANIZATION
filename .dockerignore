@@ -1,0 +1,12 @@
+# Ignore secrets from Docker build context
+.env
+*.env.local
+*.env.production
+
+# Ignore logs
+logs/
+
+# Ignore IDE/OS files
+.DS_Store
+.idea/
+.vscode/

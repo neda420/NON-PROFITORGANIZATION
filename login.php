@@ -1,49 +1,63 @@
 <?php
+declare(strict_types=1);
+
+require_once __DIR__ . '/src/config/app.php';
+require_once __DIR__ . '/src/helpers/csrf.php';
+require_once __DIR__ . '/src/helpers/flash.php';
+require_once __DIR__ . '/src/helpers/logger.php';
+require_once __DIR__ . '/src/helpers/sanitize.php';
+
 session_start();
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "helping_paws2";
-$port = 3307;
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname, $port);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+// Already logged in – redirect to dashboard.
+if (!empty($_SESSION['donorId'])) {
+    header('Location: DonorLanding.php');
+    exit;
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["donorId"]) && isset($_POST["password"])) {
-        $donor_id = $_POST["donorId"];
-        $password = $_POST["password"];
-        
-        $donor_id = mysqli_real_escape_string($conn, $donor_id);
-        $password = mysqli_real_escape_string($conn, $password);
-
-        $_SESSION['donorId'] = $donor_id;  // Assigning to session
-
-        // Debugging
-        echo "Session after login: <br>";
-        var_dump($_SESSION);
-
-        $sql = "SELECT * FROM donor_t WHERE donor_id = '$donor_id' AND password = '$password'";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
-            // Login successful
-            header("Location: http://localhost/meraj's/donor_profile.php?donorId=" . $donor_id);
-            exit();
-        } else {
-            // Login failed
-            echo "Invalid donor ID or password!";
-        }
-    } else {
-        echo "Donor ID or password not provided!";
-    }
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: LoginDonor.html');
+    exit;
 }
 
-$conn->close();
-?>
+verifyCsrfToken();
+
+$donorId  = inputNumericString($_POST['donorId'] ?? '');
+$password = inputString($_POST['password'] ?? '', 255);
+
+if ($donorId === '' || $password === '') {
+    flashSet('error', 'Donor ID and password are required.');
+    header('Location: LoginDonor.html');
+    exit;
+}
+
+$conn = getDbConnection();
+
+$stmt = $conn->prepare(
+    'SELECT donor_id, password FROM donor_t WHERE donor_id = ? LIMIT 1'
+);
+$stmt->bind_param('s', $donorId);
+$stmt->execute();
+$result = $stmt->get_result();
+$donor  = $result->fetch_assoc();
+$stmt->close();
+
+if ($donor === null || !password_verify($password, $donor['password'])) {
+    logWarning('Donor login failed', [
+        'donor_id' => $donorId,
+        'ip'       => $_SERVER['REMOTE_ADDR'] ?? '-',
+    ]);
+    flashSet('error', 'Invalid donor ID or password.');
+    header('Location: LoginDonor.html');
+    exit;
+}
+
+// Regenerate session ID on privilege change to prevent session fixation.
+session_regenerate_id(true);
+
+$_SESSION['donorId'] = $donor['donor_id'];
+
+logInfo('Donor logged in', ['donor_id' => $donor['donor_id']]);
+
+header('Location: DonorLanding.php');
+exit;
