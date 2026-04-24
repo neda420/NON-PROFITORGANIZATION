@@ -42,9 +42,10 @@ jobs:
                 --extensions=php \
                 --ignore=vendor/ \
                 --warning-severity=0 \
-                . || true
-          # `|| true` treats style warnings as non-blocking for now.
-          # Remove once codebase is fully PSR-12 compliant.
+                .
+
+      - name: Run smoke tests
+        run: php tests/smoke.php
 
   # ──────────────────────────────────────────────────────────
   # 2. Security audit
