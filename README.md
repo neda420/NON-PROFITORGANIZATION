@@ -15,7 +15,8 @@
 7. [Security Model](#security-model)
 8. [Deployment](#deployment)
 9. [Troubleshooting](#troubleshooting)
-10. [Contributing](#contributing)
+10. [GitHub Auto-Deploy](#github-auto-deploy)
+11. [Contributing](#contributing)
 
 ---
 
@@ -225,6 +226,20 @@ Future migrations should be named `002_description.sql`, `003_description.sql`, 
 1. Identify the previous image tag or git commit SHA.  
 2. Re-deploy: `docker compose up -d --no-deps --force-recreate app`  
 3. If DB changes need reverting, apply rollback SQL manually.
+
+---
+
+## GitHub Auto-Deploy
+
+You can enable automatic production deploys from GitHub Actions.
+
+- Workflow: `.github/workflows/cd.yml`
+- Guide: `docs/DEPLOY_FROM_GITHUB.md`
+- Trigger: push to `main` (or manual run with `workflow_dispatch`)
+
+The deploy workflow pulls latest code on the server, creates a DB backup,
+applies migration `002_audit_and_privacy.sql` (if present), rebuilds the app
+container, and verifies `health.php`.
 
 ---
 

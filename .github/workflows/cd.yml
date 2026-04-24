@@ -1,0 +1,74 @@
+name: CD
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy To Production
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy over SSH
+        shell: bash
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+        run: |
+          set -euo pipefail
+
+          test -n "${DEPLOY_HOST}"
+          test -n "${DEPLOY_USER}"
+          test -n "${DEPLOY_PATH}"
+          test -n "${DEPLOY_SSH_KEY}"
+
+          PORT="${DEPLOY_PORT:-22}"
+
+          mkdir -p ~/.ssh
+          printf '%s\n' "${DEPLOY_SSH_KEY}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p "${PORT}" -H "${DEPLOY_HOST}" >> ~/.ssh/known_hosts
+
+          ssh -i ~/.ssh/deploy_key -p "${PORT}" "${DEPLOY_USER}@${DEPLOY_HOST}" <<EOF
+            set -euo pipefail
+            cd "${DEPLOY_PATH}"
+
+            git fetch --all --prune
+            git checkout main
+            git pull --ff-only origin main
+
+            mkdir -p /backups
+            BACKUP_FILE="/backups/helping_paws2_\$(date +%Y%m%d_%H%M%S).sql.gz"
+            docker compose exec -T db sh -lc 'mysqldump -u root -p"\$DB_ROOT_PASSWORD" helping_paws2' | gzip > "\${BACKUP_FILE}"
+            echo "Backup saved: \${BACKUP_FILE}"
+
+            if [ -f "migrations/002_audit_and_privacy.sql" ]; then
+              docker compose exec -T db sh -lc 'mysql -u root -p"\$DB_ROOT_PASSWORD" helping_paws2' < migrations/002_audit_and_privacy.sql
+            fi
+
+            docker compose build app
+            docker compose up -d --no-deps --force-recreate app
+
+            curl --fail --silent --show-error http://localhost:8080/health.php > /dev/null
+            docker compose ps
+          EOF
+
