@@ -23,8 +23,8 @@ docker compose ps
 # Tail application logs
 docker compose logs -f app
 
-# Check PHP-FPM is responding
-curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/landingPage.html
+# Check application and DB health endpoint
+curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/health.php
 # Expected: 200
 ```
 
@@ -58,7 +58,7 @@ docker compose build app
 docker compose up -d --no-deps --force-recreate app
 
 # 4. Verify
-curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/landingPage.html
+curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/health.php
 docker compose logs --tail=20 app
 ```
 

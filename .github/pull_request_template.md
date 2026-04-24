@@ -1,3 +1,29 @@
+## What changed
+
+- 
+
+## Why
+
+- 
+
+## Test evidence
+
+- [ ] CI passed
+- [ ] Manual auth flow tested
+- [ ] Manual donation flow tested
+- [ ] Manual admin workflow tested
+
+## Migration / rollback
+
+- [ ] No migration
+- [ ] Migration added: `migrations/...`
+- [ ] Rollback plan documented
+
+## Release checklist
+
+- [ ] Meets `docs/RELEASE_CRITERIA.md`
+- [ ] Security review completed
+- [ ] Docs updated where needed
 ## Summary
 
 <!-- One paragraph describing the change and why it was made. -->
