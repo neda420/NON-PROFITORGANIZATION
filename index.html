@@ -162,21 +162,23 @@
                 });
         }
 
-        // Function to fetch total volunteers count
-        function getTotalVolunteers() {
-            fetch('get_total_volunteers.php')
+        // Function to fetch live public metrics
+        function getPublicMetrics() {
+            fetch('public_metrics.php')
                 .then(response => response.json())
                 .then(data => {
-                    updateCharts(data.totalVolunteers);
+                    updateCharts(data);
                 })
                 .catch(error => {
-                    console.error('Error fetching total volunteers count:', error);
+                    console.error('Error fetching public metrics:', error);
                     document.getElementById('total-volunteers').textContent = 'N/A';
                 });
         }
     
         // Function to update the bar chart and pie charts with live data
-        function updateCharts(totalVolunteers) {
+        function updateCharts(metrics) {
+            var totalVolunteers = Number(metrics.active_volunteers || 0);
+
             // Update bar chart height (cap at 100%)
             var bar = document.getElementById('volunteer-bar');
             var barHeight = Math.min((totalVolunteers / 100) * 100, 100);
@@ -185,10 +187,10 @@
             // Update the total volunteers count
             document.getElementById('total-volunteers').textContent = totalVolunteers;
 
-            // Update pie charts with random demo data
-            var certifiedVolunteers = Math.floor(Math.random() * 100);
-            var strayCatsRescued    = Math.floor(Math.random() * 100);
-            var strayDogsRescued    = Math.floor(Math.random() * 100);
+            // Use server-backed values instead of random placeholders.
+            var certifiedVolunteers = Number(metrics.certified_volunteers_pct || 0);
+            var strayCatsRescued    = Number(metrics.stray_cats_rescued_pct || 0);
+            var strayDogsRescued    = Number(metrics.stray_dogs_rescued_pct || 0);
 
             document.getElementById('pie-certified').style.setProperty('--primary-pct', certifiedVolunteers);
             document.getElementById('pie-cats').style.setProperty('--primary-pct', strayCatsRescued);
@@ -203,10 +205,10 @@
             document.getElementById('stray-dogs-remaining').textContent  = 100 - strayDogsRescued;
         }
     
-        // Call the getTotalVolunteers function initially and then at regular intervals
+        // Call the live metrics function initially and then at regular intervals.
         attachCsrfToken();
-        getTotalVolunteers(); // Initial call
-        setInterval(getTotalVolunteers, 5000); // Call every 5 seconds (you can adjust the interval as needed)
+        getPublicMetrics();
+        setInterval(getPublicMetrics, 5000);
     </script>
     
 </body>

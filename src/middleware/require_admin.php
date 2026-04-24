@@ -11,12 +11,9 @@
 
 declare(strict_types=1);
 
+require_once __DIR__ . '/../helpers/http.php';
+
 // session_start() must have already been called (done in app.php).
 if (!isset($_SESSION['admin_id']) || empty($_SESSION['admin_id'])) {
-    $loginUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https' : 'http')
-        . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost')
-        . '/admin_login.php';
-
-    header('Location: ' . $loginUrl);
-    exit;
+    redirectTo('admin_login.php');
 }
