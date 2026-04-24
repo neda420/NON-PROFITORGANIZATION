@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Centralised database configuration.
  *
@@ -15,7 +16,7 @@ declare(strict_types=1);
  * not already set by the host environment.  Supports # comments and
  * values optionally wrapped in single or double quotes.
  */
-function loadEnv(string $path = null): void
+function loadEnv(?string $path = null): void
 {
     $path = $path ?? dirname(__DIR__, 2) . '/.env';
 

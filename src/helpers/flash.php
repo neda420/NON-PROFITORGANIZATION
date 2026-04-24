@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Flash message helpers.
  *

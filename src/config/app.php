@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Application-wide configuration and bootstrapping.
  *

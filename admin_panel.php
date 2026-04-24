@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 require_once __DIR__ . '/src/config/app.php';
@@ -67,7 +68,7 @@ $result = $conn->query(
     <a href="landingPage.html" class="home-button">HOME</a>
     <a href="admin_logout.php" class="logout-button">Logout</a>
 
-    <?php if ($updateMessage !== ''): ?>
+    <?php if ($updateMessage !== '') : ?>
         <p class="update-message"><?php echo e($updateMessage); ?></p>
     <?php endif; ?>
 
@@ -86,7 +87,7 @@ $result = $conn->query(
         </tr>
         </thead>
         <tbody>
-        <?php while ($row = $result->fetch_assoc()): ?>
+        <?php while ($row = $result->fetch_assoc()) : ?>
             <tr>
                 <td><?php echo e($row['id']); ?></td>
                 <td><?php echo e($row['name']); ?></td>
@@ -98,8 +99,8 @@ $result = $conn->query(
                     <button type="button"
                         onclick="editRow(
                             <?php echo (int)$row['id']; ?>,
-                            <?php echo json_encode($row['name'],    JSON_HEX_APOS | JSON_HEX_QUOT); ?>,
-                            <?php echo json_encode($row['email'],   JSON_HEX_APOS | JSON_HEX_QUOT); ?>,
+                            <?php echo json_encode($row['name'], JSON_HEX_APOS | JSON_HEX_QUOT); ?>,
+                            <?php echo json_encode($row['email'], JSON_HEX_APOS | JSON_HEX_QUOT); ?>,
                             <?php echo json_encode($row['message'], JSON_HEX_APOS | JSON_HEX_QUOT); ?>
                         )">Edit</button>
                     |

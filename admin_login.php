@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 require_once __DIR__ . '/src/config/app.php';
@@ -73,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form class="login-form" action="admin_login.php" method="post" novalidate>
         <h2>Admin Login</h2>
 
-        <?php if ($error !== ''): ?>
+        <?php if ($error !== '') : ?>
             <p class="error-message" role="alert"><?php echo e($error); ?></p>
         <?php endif; ?>
 

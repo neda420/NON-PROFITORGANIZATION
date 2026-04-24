@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 require_once __DIR__ . '/src/config/app.php';
@@ -42,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="container">
     <h1>Search Results</h1>
 
-    <?php if ($search !== ''): ?>
+    <?php if ($search !== '') : ?>
         <p>Results for: <strong><?php echo e($search); ?></strong></p>
     <?php endif; ?>
 
@@ -56,8 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </tr>
         </thead>
         <tbody>
-        <?php if ($rows !== []): ?>
-            <?php foreach ($rows as $row): ?>
+        <?php if ($rows !== []) : ?>
+            <?php foreach ($rows as $row) : ?>
                 <tr>
                     <td><?php echo e($row['MedicalRecord']); ?></td>
                     <td><?php echo e($row['AnimalType']); ?></td>
@@ -65,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <td><?php echo e($row['VetBills']); ?></td>
                 </tr>
             <?php endforeach; ?>
-        <?php else: ?>
+        <?php else : ?>
             <tr><td colspan="4">No results found.</td></tr>
         <?php endif; ?>
         </tbody>

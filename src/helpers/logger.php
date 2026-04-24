@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Structured application logger.
  *

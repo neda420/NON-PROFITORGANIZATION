@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 require_once __DIR__ . '/src/config/app.php';
@@ -66,8 +67,15 @@ $stmt = $conn->prepare(
 );
 $stmt->bind_param(
     'sssssssss',
-    $donorId, $name, $email, $passwordHash,
-    $address, $phone, $occupation, $contactMethod, $interestVolunteering
+    $donorId,
+    $name,
+    $email,
+    $passwordHash,
+    $address,
+    $phone,
+    $occupation,
+    $contactMethod,
+    $interestVolunteering
 );
 
 if ($stmt->execute()) {

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 require_once __DIR__ . '/src/config/app.php';
@@ -42,8 +43,8 @@ $result = $stmt->get_result();
         <div class="table-cell last-cell"><p>Date</p></div>
     </div>
 
-    <?php if ($result->num_rows > 0): ?>
-        <?php while ($row = $result->fetch_assoc()): ?>
+    <?php if ($result->num_rows > 0) : ?>
+        <?php while ($row = $result->fetch_assoc()) : ?>
             <div class="table-row">
                 <div class="table-cell first-cell"><p><?php echo e($row['donor_name']); ?></p></div>
                 <div class="table-cell"><p><?php echo e($row['donation_purpose']); ?></p></div>
@@ -51,7 +52,7 @@ $result = $stmt->get_result();
                 <div class="table-cell last-cell"><p><?php echo e($row['donation_date'] ?? '—'); ?></p></div>
             </div>
         <?php endwhile; ?>
-    <?php else: ?>
+    <?php else : ?>
         <p class="no-records">No donation records found.</p>
     <?php endif; ?>
 

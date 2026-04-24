@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Input sanitization and validation helpers.
  *
