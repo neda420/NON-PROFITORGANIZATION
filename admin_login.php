@@ -5,6 +5,7 @@ require_once __DIR__ . '/src/config/app.php';
 require_once __DIR__ . '/src/helpers/csrf.php';
 require_once __DIR__ . '/src/helpers/flash.php';
 require_once __DIR__ . '/src/helpers/logger.php';
+require_once __DIR__ . '/src/helpers/rate_limit.php';
 require_once __DIR__ . '/src/helpers/sanitize.php';
 
 session_start();
@@ -19,6 +20,7 @@ $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     verifyCsrfToken();
+    enforceRateLimit('admin_login', 6, 300);
 
     $username = inputString($_POST['username'] ?? '', 50);
     $password = inputString($_POST['password'] ?? '', 255);

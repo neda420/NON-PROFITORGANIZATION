@@ -1,4 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () {
+    var csrf = { token_name: '_csrf_token', token: '' };
+
+    fetch('csrf_token.php', { credentials: 'same-origin' })
+        .then(function (response) { return response.json(); })
+        .then(function (payload) {
+            if (payload && payload.token_name && payload.token) {
+                csrf = payload;
+            }
+        })
+        .catch(function () {
+            // Keep default values; backend will still reject invalid submissions.
+        });
 
     /* ── Smooth scrolling ──────────────────────────────────── */
     document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
@@ -61,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('contact-form').addEventListener('submit', function (e) {
         e.preventDefault();
         var formData = new FormData(this);
+        formData.set(csrf.token_name, csrf.token);
 
         fetch('contact_process.php', { method: 'POST', body: formData })
             .then(function (response) {

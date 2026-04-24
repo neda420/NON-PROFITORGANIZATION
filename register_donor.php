@@ -5,6 +5,7 @@ require_once __DIR__ . '/src/config/app.php';
 require_once __DIR__ . '/src/helpers/csrf.php';
 require_once __DIR__ . '/src/helpers/flash.php';
 require_once __DIR__ . '/src/helpers/logger.php';
+require_once __DIR__ . '/src/helpers/rate_limit.php';
 require_once __DIR__ . '/src/helpers/sanitize.php';
 
 session_start();
@@ -15,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 verifyCsrfToken();
+enforceRateLimit('donor_registration', 5, 600);
 
 // Collect and validate inputs.
 $name                 = inputString($_POST['name']                 ?? '', 100);

@@ -143,6 +143,25 @@
 
     <!-- JavaScript for updating the bar chart and pie charts with live data -->
     <script>
+        function attachCsrfToken() {
+            var form = document.querySelector('form[action="submit_volunteer_form.php"]');
+            if (!form) return;
+
+            fetch('csrf_token.php', { credentials: 'same-origin' })
+                .then(function (response) { return response.json(); })
+                .then(function (payload) {
+                    if (!payload || !payload.token_name || !payload.token) return;
+                    var existing = form.querySelector('input[name="' + payload.token_name + '"]');
+                    if (!existing) {
+                        existing = document.createElement('input');
+                        existing.type = 'hidden';
+                        existing.name = payload.token_name;
+                        form.appendChild(existing);
+                    }
+                    existing.value = payload.token;
+                });
+        }
+
         // Function to fetch total volunteers count
         function getTotalVolunteers() {
             fetch('get_total_volunteers.php')
@@ -185,6 +204,7 @@
         }
     
         // Call the getTotalVolunteers function initially and then at regular intervals
+        attachCsrfToken();
         getTotalVolunteers(); // Initial call
         setInterval(getTotalVolunteers, 5000); // Call every 5 seconds (you can adjust the interval as needed)
     </script>

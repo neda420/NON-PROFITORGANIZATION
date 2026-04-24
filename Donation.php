@@ -5,6 +5,7 @@ require_once __DIR__ . '/src/config/app.php';
 require_once __DIR__ . '/src/helpers/csrf.php';
 require_once __DIR__ . '/src/helpers/flash.php';
 require_once __DIR__ . '/src/helpers/logger.php';
+require_once __DIR__ . '/src/helpers/rate_limit.php';
 require_once __DIR__ . '/src/helpers/sanitize.php';
 
 session_start();
@@ -18,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 verifyCsrfToken();
+enforceRateLimit('donation_submit', 10, 300);
 
 $donorId   = (string)$_SESSION['donorId'];
 $donorName = inputString($_POST['donorName'] ?? '', 100);

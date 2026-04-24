@@ -44,6 +44,22 @@
         </div>
     </div>
     <script>
+        (function () {
+            var form = document.querySelector('form[action="Donation.php"]');
+            if (!form) return;
+
+            fetch('csrf_token.php', { credentials: 'same-origin' })
+                .then(function (response) { return response.json(); })
+                .then(function (payload) {
+                    if (!payload || !payload.token_name || !payload.token) return;
+                    var input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = payload.token_name;
+                    input.value = payload.token;
+                    form.appendChild(input);
+                });
+        })();
+
         function updateAmount() {
             var purpose = document.getElementById('purpose').value;
             var amountInput = document.getElementById('amount');
