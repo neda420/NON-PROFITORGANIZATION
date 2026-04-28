@@ -5,82 +5,36 @@ on:
     branches: ["main"]
   workflow_dispatch:
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
-
 permissions:
   contents: read
+  pages: write
+  id-token: write
 
 concurrency:
-  group: production-deploy
+  group: pages
   cancel-in-progress: false
 
 jobs:
   deploy:
-    name: Deploy To Production
+    name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
-    environment: production
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
-      - name: Deploy over SSH
-        shell: bash
-        env:
-          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
-          DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
-          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
-          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
-        run: |
-          set -euo pipefail
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
-          if [ -z "${DEPLOY_HOST:-}" ]; then
-            echo "Missing required secret: DEPLOY_HOST"
-            exit 1
-          fi
-          if [ -z "${DEPLOY_USER:-}" ]; then
-            echo "Missing required secret: DEPLOY_USER"
-            exit 1
-          fi
-          if [ -z "${DEPLOY_PATH:-}" ]; then
-            echo "Missing required secret: DEPLOY_PATH"
-            exit 1
-          fi
-          if [ -z "${DEPLOY_SSH_KEY:-}" ]; then
-            echo "Missing required secret: DEPLOY_SSH_KEY"
-            exit 1
-          fi
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
 
-          PORT="${DEPLOY_PORT:-22}"
-
-          mkdir -p ~/.ssh
-          printf '%s\n' "${DEPLOY_SSH_KEY}" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -p "${PORT}" -H "${DEPLOY_HOST}" >> ~/.ssh/known_hosts
-
-          ssh -i ~/.ssh/deploy_key -p "${PORT}" "${DEPLOY_USER}@${DEPLOY_HOST}" <<EOF
-            set -euo pipefail
-            cd "${DEPLOY_PATH}"
-
-            git fetch --all --prune
-            git checkout main
-            git pull --ff-only origin main
-
-            mkdir -p /backups
-            BACKUP_FILE="/backups/helping_paws2_\$(date +%Y%m%d_%H%M%S).sql.gz"
-            docker compose exec -T db sh -lc 'mysqldump -u root -p"\$DB_ROOT_PASSWORD" helping_paws2' | gzip > "\${BACKUP_FILE}"
-            echo "Backup saved: \${BACKUP_FILE}"
-
-            if [ -f "migrations/002_audit_and_privacy.sql" ]; then
-              docker compose exec -T db sh -lc 'mysql -u root -p"\$DB_ROOT_PASSWORD" helping_paws2' < migrations/002_audit_and_privacy.sql
-            fi
-
-            docker compose build app
-            docker compose up -d --no-deps --force-recreate app
-
-            curl --fail --silent --show-error http://localhost:8080/health.php > /dev/null
-            docker compose ps
-          EOF
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
 
