@@ -4,82 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donation</title>
+    <!-- Bootstrap 4.5.2 -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/donation.css">
 </head>
 <body>
     <div class="container mt-5">
-        <div class="card">
+        <div class="card shadow-sm">
             <div class="card-header bg-primary text-white">
                 <h2 class="mb-0">Donation</h2>
             </div>
             <div class="card-body">
-                <!-- Modified form with action attribute pointing to the PHP script -->
-                <form action="Donation.php" method="post">
+                <!-- Action points to your PHP handler -->
+                <form action="Donation.php" method="post" id="donationForm">
                     <div class="form-group">
                         <label for="donorId">Donor ID</label>
-                        <input type="text" class="form-control" id="donorId" name="donorId" placeholder="Enter donor ID">
+                        <input type="text" class="form-control" id="donorId" name="donorId" placeholder="Enter donor ID" required>
                     </div>
+                    
                     <div class="form-group">
                         <label for="donorName">Donor Name</label>
-                        <input type="text" class="form-control" id="donorName" name="donorName" placeholder="Enter donor name">
+                        <input type="text" class="form-control" id="donorName" name="donorName" placeholder="Enter donor name" required>
                     </div>
+                    
                     <div class="form-group">
                         <label for="purpose">Donation Purpose</label>
-                        <select class="form-control" id="purpose" name="purpose" onchange="updateAmount()">
+                        <select class="form-control" id="purpose" name="purpose" onchange="updateAmount()" required>
                             <option value="Weekly">Weekly donor</option>
                             <option value="Monthly">Monthly Donor</option>
                             <option value="Shelter">Make a Shelter</option>
                             <option value="Medical">For medical purposes</option>
                         </select>
                     </div>
+                    
                     <div class="form-group">
-                        <label for="amount">Amount</label>
-                        <input type="number" class="form-control" id="amount" name="amount" placeholder="Select donation purpose to see amount" readonly>
+                        <label for="amount">Amount ($)</label>
+                        <input type="number" step="0.01" class="form-control" id="amount" name="amount" placeholder="Amount" readonly>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary btn-block">Pay</button>
+                    <button type="submit" class="btn btn-primary btn-block">Pay Now</button>
                 </form>
             </div>
         </div>
     </div>
+
     <script>
-        (function () {
-            var form = document.querySelector('form[action="Donation.php"]');
-            if (!form) return;
+        // Run functions when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // 1. Set the initial amount based on default selection
+            updateAmount();
 
-            fetch('csrf_token.php', { credentials: 'same-origin' })
-                .then(function (response) { return response.json(); })
-                .then(function (payload) {
-                    if (!payload || !payload.token_name || !payload.token) return;
-                    var input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = payload.token_name;
-                    input.value = payload.token;
-                    form.appendChild(input);
-                });
-        })();
+            // 2. CSRF Token Fetch Logic
+            var form = document.getElementById('donationForm');
+            if (form) {
+                fetch('csrf_token.php', { credentials: 'same-origin' })
+                    .then(function (response) { 
+                        if (!response.ok) throw new Error('CSRF fetch failed');
+                        return response.json(); 
+                    })
+                    .then(function (payload) {
+                        if (!payload || !payload.token_name || !payload.token) return;
+                        var input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = payload.token_name;
+                        input.value = payload.token;
+                        form.appendChild(input);
+                    })
+                    .catch(function(err) {
+                        console.error('Security Token Error:', err);
+                    });
+            }
+        });
 
+        // Function to update amount based on purpose selection
         function updateAmount() {
             var purpose = document.getElementById('purpose').value;
             var amountInput = document.getElementById('amount');
 
-            switch (purpose) {
-                case 'Weekly':
-                    amountInput.value = '500.00';
-                    break;
-                case 'Monthly':
-                    amountInput.value = '2000.00';
-                    break;
-                case 'Shelter':
-                    amountInput.value = '10000.00';
-                    break;
-                case 'Medical':
-                    amountInput.value = '5000.00';
-                    break;
-                default:
-                    amountInput.value = '';
-            }
+            var priceMap = {
+                'Weekly': '500.00',
+                'Monthly': '2000.00',
+                'Shelter': '10000.00',
+                'Medical': '5000.00'
+            };
+
+            amountInput.value = priceMap[purpose] || '';
         }
     </script>
 </body>
