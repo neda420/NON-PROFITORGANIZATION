@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/src/config/app.php';
-require_once __DIR__ . '/src/helpers/csrf.php';
-require_once __DIR__ . '/src/helpers/flash.php';
-require_once __DIR__ . '/src/helpers/logger.php';
-require_once __DIR__ . '/src/helpers/rate_limit.php';
-require_once __DIR__ . '/src/helpers/sanitize.php';
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/src/Config/app.php';
+
+use HelpingPaws\Models\DonorModel;
 
 session_start();
 
@@ -34,16 +32,7 @@ if ($donorId === '' || $password === '') {
     exit;
 }
 
-$conn = getDbConnection();
-
-$stmt = $conn->prepare(
-    'SELECT donor_id, password FROM donor_t WHERE donor_id = ? LIMIT 1'
-);
-$stmt->bind_param('s', $donorId);
-$stmt->execute();
-$result = $stmt->get_result();
-$donor  = $result->fetch_assoc();
-$stmt->close();
+$donor = (new DonorModel(getDbConnection()))->findForAuth($donorId);
 
 if ($donor === null || !password_verify($password, $donor['password'])) {
     logWarning('Donor login failed', [

@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/src/config/app.php';
-require_once __DIR__ . '/src/helpers/csrf.php';
-require_once __DIR__ . '/src/helpers/flash.php';
-require_once __DIR__ . '/src/helpers/logger.php';
-require_once __DIR__ . '/src/helpers/rate_limit.php';
-require_once __DIR__ . '/src/helpers/sanitize.php';
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/src/Config/app.php';
+
+use HelpingPaws\Models\AdminModel;
 
 session_start();
 
@@ -29,16 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($username === '' || $password === '') {
         $error = 'Username and password are required.';
     } else {
-        $conn = getDbConnection();
-
-        $stmt = $conn->prepare(
-            'SELECT id, password FROM ADMIN_TABLE WHERE username = ? LIMIT 1'
-        );
-        $stmt->bind_param('s', $username);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $admin  = $result->fetch_assoc();
-        $stmt->close();
+        $admin = (new AdminModel(getDbConnection()))->findByUsername($username);
 
         if ($admin !== null && password_verify($password, $admin['password'])) {
             session_regenerate_id(true);

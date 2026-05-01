@@ -1,0 +1,29 @@
+{
+    "name": "helping-paws/non-profit-organization",
+    "description": "Helping Paws Non-Profit Organization web application",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "HelpingPaws\\": "src/"
+        },
+        "files": [
+            "src/Helpers/csrf.php",
+            "src/Helpers/flash.php",
+            "src/Helpers/http.php",
+            "src/Helpers/logger.php",
+            "src/Helpers/rate_limit.php",
+            "src/Helpers/sanitize.php"
+        ]
+    },
+    "autoload-dev": {
+        "files": []
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    }
+}

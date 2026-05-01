@@ -2,17 +2,15 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/src/config/app.php';
-require_once __DIR__ . '/src/helpers/csrf.php';
-require_once __DIR__ . '/src/helpers/flash.php';
-require_once __DIR__ . '/src/helpers/logger.php';
-require_once __DIR__ . '/src/helpers/rate_limit.php';
-require_once __DIR__ . '/src/helpers/sanitize.php';
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/src/Config/app.php';
+
+use HelpingPaws\Models\DonationModel;
 
 session_start();
 
 // Require donor authentication.
-require_once __DIR__ . '/src/middleware/require_auth.php';
+require_once __DIR__ . '/src/Middleware/require_auth.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: Donation.html');
@@ -34,15 +32,14 @@ if ($donorName === '' || !in_array($purpose, $allowedPurposes, true) || $amount 
     exit;
 }
 
-$conn = getDbConnection();
+$ok = (new DonationModel(getDbConnection()))->create([
+    'donor_id'         => $donorId,
+    'donor_name'       => $donorName,
+    'donation_purpose' => $purpose,
+    'amount'           => $amount,
+]);
 
-$stmt = $conn->prepare(
-    'INSERT INTO Donation_T (donor_id, donor_name, donation_purpose, amount)
-     VALUES (?, ?, ?, ?)'
-);
-$stmt->bind_param('sssd', $donorId, $donorName, $purpose, $amount);
-
-if ($stmt->execute()) {
+if ($ok) {
     logInfo('Donation recorded', [
         'donor_id' => $donorId,
         'purpose'  => $purpose,
@@ -51,10 +48,9 @@ if ($stmt->execute()) {
     flashSet('success', 'Thank you! Your donation has been recorded.');
     header('Location: donor_profile.php');
 } else {
-    logError('Donation insert failed', ['error' => $stmt->error]);
+    logError('Donation insert failed', ['donor_id' => $donorId]);
     flashSet('error', 'Could not record your donation. Please try again.');
     header('Location: Donation.html');
 }
 
-$stmt->close();
 exit;
