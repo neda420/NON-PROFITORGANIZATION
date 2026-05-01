@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/src/config/app.php';
-require_once __DIR__ . '/src/helpers/csrf.php';
-require_once __DIR__ . '/src/helpers/flash.php';
-require_once __DIR__ . '/src/helpers/logger.php';
-require_once __DIR__ . '/src/helpers/rate_limit.php';
-require_once __DIR__ . '/src/helpers/sanitize.php';
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/src/Config/app.php';
+
+use HelpingPaws\Models\DonorModel;
 
 session_start();
 
@@ -45,48 +43,35 @@ if (strlen($rawPassword) < 8) {
 
 $passwordHash = password_hash($rawPassword, PASSWORD_BCRYPT);
 
-$conn = getDbConnection();
+$model = new DonorModel(getDbConnection());
 
 // Check donor ID uniqueness.
-$check = $conn->prepare('SELECT donor_id FROM donor_t WHERE donor_id = ? LIMIT 1');
-$check->bind_param('s', $donorId);
-$check->execute();
-$check->store_result();
-if ($check->num_rows > 0) {
-    $check->close();
+if ($model->existsById($donorId)) {
     flashSet('error', 'That donor ID is already taken. Please choose another.');
     header('Location: DonorCredentials.html');
     exit;
 }
-$check->close();
 
-$stmt = $conn->prepare(
-    'INSERT INTO donor_t
-        (donor_id, name, email, password, address, phone, occupation, contact_method, interest_volunteering)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
-);
-$stmt->bind_param(
-    'sssssssss',
-    $donorId,
-    $name,
-    $email,
-    $passwordHash,
-    $address,
-    $phone,
-    $occupation,
-    $contactMethod,
-    $interestVolunteering
-);
+$ok = $model->create([
+    'donor_id'             => $donorId,
+    'name'                 => $name,
+    'email'                => $email,
+    'password'             => $passwordHash,
+    'address'              => $address,
+    'phone'                => $phone,
+    'occupation'           => $occupation,
+    'contact_method'       => $contactMethod,
+    'interest_volunteering' => $interestVolunteering,
+]);
 
-if ($stmt->execute()) {
+if ($ok) {
     logInfo('Donor registered', ['donor_id' => $donorId]);
     flashSet('success', 'Account created successfully! Please log in.');
     header('Location: LoginDonor.html');
 } else {
-    logError('Donor registration failed', ['error' => $stmt->error]);
+    logError('Donor registration failed', ['donor_id' => $donorId]);
     flashSet('error', 'Registration failed. Please try again.');
     header('Location: DonorCredentials.html');
 }
 
-$stmt->close();
 exit;
