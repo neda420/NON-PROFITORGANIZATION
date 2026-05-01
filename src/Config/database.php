@@ -51,21 +51,16 @@ function loadEnv(?string $path = null): void
 loadEnv();
 
 /**
- * Return a singleton PDO connection.
- *
- * PDO is configured with:
- *   - ERRMODE_EXCEPTION  – all errors throw PDOException
- *   - FETCH_ASSOC        – fetch rows as associative arrays by default
- *   - EMULATE_PREPARES=false – use native prepared statements
+ * Return a singleton MySQLi connection.
  *
  * Terminates with a generic 503 on failure so that internal connection
  * details are never exposed to the browser.
  */
-function getDbConnection(): \PDO
+function getDbConnection(): mysqli
 {
     static $conn = null;
 
-    if ($conn instanceof \PDO) {
+    if ($conn instanceof mysqli && !$conn->connect_error) {
         return $conn;
     }
 
@@ -75,18 +70,12 @@ function getDbConnection(): \PDO
     $username = getenv('DB_USERNAME') ?: 'root';
     $password = getenv('DB_PASSWORD') ?: '';
 
-    $dsn = "mysql:host={$host};port={$port};dbname={$dbname};charset=utf8mb4";
+    $conn = new mysqli($host, $username, $password, $dbname, $port);
 
-    try {
-        $conn = new \PDO($dsn, $username, $password, [
-            \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
-            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-            \PDO::ATTR_EMULATE_PREPARES   => false,
-        ]);
-    } catch (\PDOException $e) {
+    if ($conn->connect_error) {
         error_log(sprintf(
             '[DB] Connection failed: %s (host=%s port=%d db=%s)',
-            $e->getMessage(),
+            $conn->connect_error,
             $host,
             $port,
             $dbname
@@ -94,6 +83,8 @@ function getDbConnection(): \PDO
         http_response_code(503);
         die('Service temporarily unavailable. Please try again later.');
     }
+
+    $conn->set_charset('utf8mb4');
 
     return $conn;
 }

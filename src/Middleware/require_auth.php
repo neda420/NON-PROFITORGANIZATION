@@ -7,13 +7,14 @@
  * logged in.  It will redirect unauthenticated visitors to the login page.
  *
  * Usage:
- *   require_once __DIR__ . '/src/Middleware/require_auth.php';
+ *   require_once __DIR__ . '/src/middleware/require_auth.php';
  */
 
 declare(strict_types=1);
 
+require_once __DIR__ . '/../helpers/http.php';
+
 // session_start() must have already been called (done in app.php).
 if (!isset($_SESSION['donorId']) || empty($_SESSION['donorId'])) {
-    header('Location: LoginDonor.html', true, 302);
-    exit;
+    redirectTo('LoginDonor.html');
 }
