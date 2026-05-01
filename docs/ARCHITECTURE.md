@@ -446,7 +446,7 @@ Full DDL: `migrations/001_initial_schema.sql` (original), `migrations/003_rename
 
 ### Donor
 
-1. GET `POST /donor/login` → `DonorController::login()`
+1. POST `/donor/login` → `DonorController::login()`
 2. `DonorModel::findByUsername()` — PDO prepared statement
 3. `password_verify()` against bcrypt hash
 4. `session_regenerate_id(true)` → set `$_SESSION['donor_id']`
