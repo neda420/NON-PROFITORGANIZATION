@@ -9,7 +9,7 @@ RUN apk add --no-cache \
 
 # Create non-root application user
 RUN addgroup -g 1001 -S appgroup && adduser -u 1001 -S appuser -G appgroup
-
+ 
 WORKDIR /var/www/html
 
 # Copy application source (excluding secrets – see .dockerignore)
